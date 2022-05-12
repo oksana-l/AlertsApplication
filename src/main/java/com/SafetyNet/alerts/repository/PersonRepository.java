@@ -29,10 +29,25 @@ public class PersonRepository {
 				.collect(Collectors.toList());
 	}
 	
+	public List<Person> findByFirstNameAndLastName(String firstName, String lastName) {
+		
+		return store.getPersons().stream()
+				.filter(fm -> firstName.equals(fm.getFirstName()))
+				.filter(ln -> lastName.equals(ln.getLastName()))
+				.collect(Collectors.toList());
+	}
+	
 	public List<Person> findByAddressIn(Set<String> addresses) {
 
 		return store.getPersons().stream()
 				.filter(a -> addresses.contains(a.getAddress()))
+				.collect(Collectors.toList());
+	}
+	
+	public List<Person> findAllByCity(String city) {
+		
+		return store.getPersons().stream()
+				.filter(c -> city.equals(c.getCity()))
 				.collect(Collectors.toList());
 	}
 }

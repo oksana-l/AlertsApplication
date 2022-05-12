@@ -1,17 +1,17 @@
 package com.SafetyNet.alerts.dto;
 
-public class PersonDTO {
+public class PersonPerStationDTO {
 
 	private String firstName;
 	private String lastName;
 	private String address;
 	private String phone;
 	
-	public PersonDTO() {
+	public PersonPerStationDTO() {
 		
 	}
 
-	public PersonDTO(String firstName, String lastName, String address, String phone) {
+	public PersonPerStationDTO(String firstName, String lastName, String address, String phone) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
