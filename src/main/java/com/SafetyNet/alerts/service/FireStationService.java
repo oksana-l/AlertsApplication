@@ -49,13 +49,13 @@ public class FireStationService {
 	// Returns a list of majors
 	public List<PersonDTO> majors(List<PersonDTO> person) {
 		
-		return person.stream().filter(p -> medicalRecordsService.isMajor(p)).collect(Collectors.toList());
+		return person.stream().filter(p -> medicalRecordsService.isMajor(p.getFirstName(), p.getLastName())).collect(Collectors.toList());
 	}
 	
 	// Returns a list of minors
 	public List<PersonDTO> minors(List<PersonDTO> person) {
 
-		return person.stream().filter(p -> medicalRecordsService.isMinor(p)).collect(Collectors.toList());
+		return person.stream().filter(p -> medicalRecordsService.isMinor(p.getFirstName(), p.getLastName())).collect(Collectors.toList());
 	}
 	
 	// Calculates the number of persons per list

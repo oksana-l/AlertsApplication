@@ -13,7 +13,6 @@ public class PersonDTO {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-
 	}
 
 	public String getFirstName() {

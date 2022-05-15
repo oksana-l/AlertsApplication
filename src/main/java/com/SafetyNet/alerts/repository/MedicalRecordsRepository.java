@@ -20,12 +20,12 @@ public class MedicalRecordsRepository {
 		return store.getMedicalrecords();
 	}
 	
-	public List<MedicalRecords> findByName(String firstName, String lastName) {
+	public MedicalRecords findByName(String firstName, String lastName) {
 
 		return store.getMedicalrecords().stream()
 				.filter(fn -> firstName.equals(fn.getFirstName()))
 				.filter(ln -> lastName.equals(ln.getLastName()))
-				.collect(Collectors.toList());
+				.collect(Collectors.toList()).get(0);
 	}
 	
 	public List<MedicalRecords> findByFirstName(String firstName) {
@@ -37,8 +37,6 @@ public class MedicalRecordsRepository {
 	
 	public String birthDate(String firstName, String lastName) {
 		
-		return findByName(firstName, lastName).stream()
-				.map(person -> person.getbirthdate())
-				.collect(Collectors.toList()).get(0);
+		return findByName(firstName, lastName).getbirthdate();
 	}
 }
