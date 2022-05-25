@@ -22,8 +22,7 @@ public class FireStationService {
 	private PersonRepository personRepository;
 	@Autowired
 	private MedicalRecordsService medicalRecordsService;
-	@Autowired
-	private FirestationDTO firestationDTO;
+	
 	
 	// Returns a list of persons with their first and last names, their addresses and phone numbers
 	public List<PersonPerStationDTO> personsPerStation(String stationNumber) {
@@ -46,28 +45,15 @@ public class FireStationService {
 				.collect(Collectors.toList());
 	}
 	
-	// Returns a list of majors
-	public List<PersonDTO> majors(List<PersonDTO> person) {
-		
-		return person.stream().filter(p -> medicalRecordsService.isMajor(p.getFirstName(), p.getLastName())).collect(Collectors.toList());
-	}
-	
-	// Returns a list of minors
-	public List<PersonDTO> minors(List<PersonDTO> person) {
-
-		return person.stream().filter(p -> medicalRecordsService.isMinor(p.getFirstName(), p.getLastName())).collect(Collectors.toList());
-	}
-	
-	// Calculates the number of persons per list
-	public int numberOfPersons(List<PersonDTO> list) {
-		
-		return list.size();
-	}
-	
+	/**
+	 *  
+	 */
 	public FirestationDTO personsPerStationAndAge(String stationNumber) {
-		firestationDTO.setPersonPerStationDTO(personsPerStation(stationNumber));
-		firestationDTO.setMajors(numberOfPersons(majors(person(stationNumber))));
-		firestationDTO.setMinors(numberOfPersons(minors(person(stationNumber))));
+		FirestationDTO firestationDTO = new FirestationDTO();
+		List<PersonPerStationDTO> personsPerStation = personsPerStation(stationNumber);
+		firestationDTO.setPersonPerStationDTO(personsPerStation);
+		firestationDTO.setMajors(personsPerStation.stream().filter(p -> medicalRecordsService.getAgeOfPerson(p.getFirstName(), p.getLastName()) > 18).count());
+		firestationDTO.setMinors(personsPerStation.stream().filter(p -> medicalRecordsService.getAgeOfPerson(p.getFirstName(), p.getLastName()) < 18).count());
 		return firestationDTO;
 	}
 }

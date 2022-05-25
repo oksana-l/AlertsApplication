@@ -2,20 +2,17 @@ package com.SafetyNet.alerts.dto;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class FirestationDTO {
 
 	private List<PersonPerStationDTO> personPerStationDTO;
-	private int majors;
-	private int minors;
+	private long majors;
+	private long minors;
 	
 	public FirestationDTO() {
 		
 	}
 
-	public FirestationDTO(List<PersonPerStationDTO> personPerStationDTO, int majors, int minors) {
+	public FirestationDTO(List<PersonPerStationDTO> personPerStationDTO, long majors, long minors) {
 		super();
 		this.personPerStationDTO = personPerStationDTO;
 		this.majors = majors;
@@ -30,19 +27,19 @@ public class FirestationDTO {
 		this.personPerStationDTO = personPerStationDTO;
 	}
 
-	public int getMajors() {
+	public long getMajors() {
 		return majors;
 	}
 
-	public void setMajors(int majors) {
+	public void setMajors(long majors) {
 		this.majors = majors;
 	}
 
-	public int getMinors() {
+	public long getMinors() {
 		return minors;
 	}
 
-	public void setMinors(int minors) {
+	public void setMinors(long minors) {
 		this.minors = minors;
 	}
 }

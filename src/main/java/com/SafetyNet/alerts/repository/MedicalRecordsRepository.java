@@ -34,9 +34,4 @@ public class MedicalRecordsRepository {
 				.filter(fn -> firstName.equals(fn.getFirstName()))
 				.collect(Collectors.toList());
 	}
-	
-	public String birthDate(String firstName, String lastName) {
-		
-		return findByName(firstName, lastName).getbirthdate();
-	}
 }

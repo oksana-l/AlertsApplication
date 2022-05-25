@@ -12,10 +12,14 @@ import com.SafetyNet.alerts.model.Store;
 
 @Service
 public class PersonRepository {
-
-	@Autowired
+	
 	private Store store;
 	
+	@Autowired
+	public PersonRepository(Store store) {
+		this.store = store;
+	}
+
 	public List<Person> findAll() {
 		return store.getPersons();
 	}

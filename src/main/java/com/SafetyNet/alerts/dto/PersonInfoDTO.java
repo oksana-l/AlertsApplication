@@ -1,8 +1,5 @@
 package com.SafetyNet.alerts.dto;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class PersonInfoDTO {
 
 	private String name;
@@ -56,11 +53,11 @@ public class PersonInfoDTO {
 		this.email = email;
 	}
 
-	public MedicalRecordsInfoDTO getMedicalRecordsInfoDTO() {
+	public MedicalRecordsInfoDTO getMedicalRecords() {
 		return medicalRecords;
 	}
 
-	public void setMedicalRecordsInfoDTO(MedicalRecordsInfoDTO medicalRecords) {
+	public void setMedicalRecords(MedicalRecordsInfoDTO medicalRecords) {
 		this.medicalRecords = medicalRecords;
 	}
 	

@@ -1,21 +1,26 @@
 package com.SafetyNet.alerts.dto;
 
-public class ChildDTO {
+import java.util.List;
+
+
+public class ChildAlertDTO {
 
 	private String firstName;
 	private String lastName;
-	private String age;
+	private int age;
+	private List<PersonDTO> familyMembers;
 	
 	
-	public ChildDTO() {
+	public ChildAlertDTO() {
 		
 	}
 	
-	public ChildDTO(String firstName, String lastName, String birthdate) {
+	public ChildAlertDTO(String firstName, String lastName, int age, List<PersonDTO> familyMembers) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.age = birthdate;
+		this.age = age;
+		this.familyMembers = familyMembers;
 	}
 
 	public String getFirstName() {
@@ -34,11 +39,19 @@ public class ChildDTO {
 		this.lastName = lastName;
 	}
 
-	public String getBirthdate() {
+	public int getAge() {
 		return age;
 	}
 
-	public void setBirthdate(String birthdate) {
-		this.age = birthdate;
+	public void setAge(int age) {
+		this.age = age;
+	}
+	
+	public List<PersonDTO> getFamilyMembers() {
+		return familyMembers;
+	}
+	
+	public void setFamilyMembers(List<PersonDTO> familyMembers) {
+		this.familyMembers = familyMembers;
 	}
 }

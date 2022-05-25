@@ -2,9 +2,6 @@ package com.SafetyNet.alerts.dto;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class MedicalRecordsInfoDTO {
 	private List<String> medications;
 	private List<String> allergies;

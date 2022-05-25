@@ -2,9 +2,6 @@ package com.SafetyNet.alerts.model;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class MedicalRecords {
 	private String firstName;
 	private String lastName;
