@@ -15,8 +15,8 @@ public class StoreConfigurationTest {
 		Store store = storeConfiguration.store();
 		
 		Assertions.assertNotNull(store);
-		Assertions.assertEquals(3, store.getPersons().size());
-		Assertions.assertEquals(3, store.getFirestations().size());
-		Assertions.assertEquals(3, store.getMedicalrecords().size());
+		Assertions.assertEquals(23, store.getPersons().size());
+		Assertions.assertEquals(13, store.getFirestations().size());
+		Assertions.assertEquals(23, store.getMedicalrecords().size());
 	}
 }
