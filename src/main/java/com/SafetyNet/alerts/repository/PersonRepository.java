@@ -41,6 +41,17 @@ public class PersonRepository {
 				.collect(Collectors.toList());
 	}
 	
+	public Person findPersonByFirstNameAndLastName(String firstName, String lastName) {
+		Person person = new Person();
+		List<Person> persons = findAll();
+		for (Person i : persons) {
+			if (i.getFirstName().contains(firstName) & i.getLastName().contains(lastName)) {
+				person = i;	
+			}
+		}
+		return person;
+	}
+	
 	public List<Person> findByAddressIn(Set<String> addresses) {
 
 		return store.getPersons().stream()
