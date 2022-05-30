@@ -1,6 +1,6 @@
 package com.SafetyNet.alerts.controller;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class PhoneAlertController {
 	private PhoneAlertService phoneAlertService;
 	
 	@GetMapping("/phoneAlert") 
-	public List<String> listOfPhonePerFireStation(@RequestParam String firestation) {
+	public Set<String> listOfPhonePerFireStation(@RequestParam String firestation) {
 		return phoneAlertService.listOfPhonePerNumFireStation(firestation);
 	}
 }

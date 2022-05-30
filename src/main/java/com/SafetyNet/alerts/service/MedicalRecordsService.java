@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.SafetyNet.alerts.dto.MedicalRecordsInfoDTO;
 import com.SafetyNet.alerts.model.MedicalRecords;
+import com.SafetyNet.alerts.model.Person;
 import com.SafetyNet.alerts.repository.MedicalRecordsRepository;
 
 @Service
@@ -23,6 +24,13 @@ public class MedicalRecordsService {
 		LocalDate birthdate = LocalDate.parse(medicalRecord.getbirthdate(), DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 		LocalDate today = LocalDate.now();
 		return Period.between(birthdate, today).getYears();
+	}
+	
+	public boolean isMinor(Person person) {
+		return getAgeOfPerson(person.getFirstName(), person.getLastName()) < 19;
+	}
+	public boolean isMajor(Person person) {
+		return getAgeOfPerson(person.getFirstName(), person.getLastName()) > 19;
 	}
 	
 	public MedicalRecordsInfoDTO findByNameDTO(String firstName, String lastName) {

@@ -52,8 +52,10 @@ public class FireStationService {
 		FirestationDTO firestationDTO = new FirestationDTO();
 		List<PersonPerStationDTO> personsPerStation = personsPerStation(stationNumber);
 		firestationDTO.setPersonPerStationDTO(personsPerStation);
-		firestationDTO.setMajors(personsPerStation.stream().filter(p -> medicalRecordsService.getAgeOfPerson(p.getFirstName(), p.getLastName()) > 18).count());
-		firestationDTO.setMinors(personsPerStation.stream().filter(p -> medicalRecordsService.getAgeOfPerson(p.getFirstName(), p.getLastName()) < 18).count());
+		firestationDTO.setNumberOfMajors(personsPerStation.stream().filter(p -> medicalRecordsService
+				.getAgeOfPerson(p.getFirstName(), p.getLastName()) > 18).count());
+		firestationDTO.setNumberOfMinors(personsPerStation.stream().filter(p -> medicalRecordsService
+				.getAgeOfPerson(p.getFirstName(), p.getLastName()) < 18).count());
 		return firestationDTO;
 	}
 }

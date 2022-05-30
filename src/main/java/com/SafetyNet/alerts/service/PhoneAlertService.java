@@ -1,6 +1,5 @@
 package com.SafetyNet.alerts.service;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,12 +17,12 @@ public class PhoneAlertService {
 	@Autowired
 	private PersonRepository personRepository;
 
-	public List<String> listOfPhonePerNumFireStation(String stationNumber) {
+	public Set<String> listOfPhonePerNumFireStation(String stationNumber) {
 		
 		Set<String> fireStationAddresses = fireStationRepository.findByStation(stationNumber).stream()
 				.map(fs -> fs.getAddress()).collect(Collectors.toSet());
 
 		return personRepository.findByAddressIn(fireStationAddresses).stream()
-				.map(p -> p.getPhone()).collect(Collectors.toList());
+				.map(p -> p.getPhone()).collect(Collectors.toSet());
 	}
 }

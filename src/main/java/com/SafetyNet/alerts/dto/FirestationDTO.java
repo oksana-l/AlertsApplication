@@ -5,18 +5,18 @@ import java.util.List;
 public class FirestationDTO {
 
 	private List<PersonPerStationDTO> personPerStationDTO;
-	private long majors;
-	private long minors;
+	private long numberOfMajors;
+	private long numberOfMinors;
 	
 	public FirestationDTO() {
 		
 	}
 
-	public FirestationDTO(List<PersonPerStationDTO> personPerStationDTO, long majors, long minors) {
+	public FirestationDTO(List<PersonPerStationDTO> personPerStationDTO, long numberOfMajors, long numberOfMinors) {
 		super();
 		this.personPerStationDTO = personPerStationDTO;
-		this.majors = majors;
-		this.minors = minors;
+		this.numberOfMajors = numberOfMajors;
+		this.numberOfMinors = numberOfMinors;
 	}
 
 	public List<PersonPerStationDTO> getPersonPerStationDTO() {
@@ -27,19 +27,19 @@ public class FirestationDTO {
 		this.personPerStationDTO = personPerStationDTO;
 	}
 
-	public long getMajors() {
-		return majors;
+	public long getNumberOfMajors() {
+		return numberOfMajors;
 	}
 
-	public void setMajors(long majors) {
-		this.majors = majors;
+	public void setNumberOfMajors(long numberOfMajors) {
+		this.numberOfMajors = numberOfMajors;
 	}
 
-	public long getMinors() {
-		return minors;
+	public long getNumberOfMinors() {
+		return numberOfMinors;
 	}
 
-	public void setMinors(long minors) {
-		this.minors = minors;
+	public void setNumberOfMinors(long numberOfMinors) {
+		this.numberOfMinors = numberOfMinors;
 	}
 }

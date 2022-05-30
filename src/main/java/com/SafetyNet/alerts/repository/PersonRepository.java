@@ -59,6 +59,12 @@ public class PersonRepository {
 				.collect(Collectors.toList());
 	}
 	
+	public List<Person> findByAddress(String address) {
+		
+		return store.getPersons().stream().filter(p -> address
+				.equals(p.getAddress())).collect(Collectors.toList());
+	}
+	
 	public List<Person> findAllByCity(String city) {
 		
 		return store.getPersons().stream()
