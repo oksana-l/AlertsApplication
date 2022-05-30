@@ -18,7 +18,7 @@ public class ChildAlertService {
 	@Autowired
 	private PersonRepository personRepository;
 	@Autowired
-	MedicalRecordsService medicalRecordsService;
+	private MedicalRecordsService medicalRecordsService;
 	
 	public List<ChildAlertDTO> listOfChildPerAddress(String address) {
 		
@@ -26,7 +26,6 @@ public class ChildAlertService {
 		
 		List<Person> minorsPerAddress = personRepository.findByAddress(address).stream()
 				.filter(p -> medicalRecordsService.isMinor(p)).collect(Collectors.toList());
-		//System.out.println(minorsPerAddress.toString());
 		
 		for (Person child : minorsPerAddress) {
 			ChildAlertDTO childAlertDTO = new ChildAlertDTO();

@@ -21,7 +21,8 @@ public class MedicalRecordsService {
 	public int getAgeOfPerson(String firstName, String lastName) {
 		MedicalRecords medicalRecord = medicalRecordsRepository
 				.findByName(firstName, lastName);
-		LocalDate birthdate = LocalDate.parse(medicalRecord.getbirthdate(), DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+		LocalDate birthdate = LocalDate.parse(medicalRecord
+				.getbirthdate(), DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 		LocalDate today = LocalDate.now();
 		return Period.between(birthdate, today).getYears();
 	}
