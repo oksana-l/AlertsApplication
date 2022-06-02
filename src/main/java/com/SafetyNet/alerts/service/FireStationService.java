@@ -24,6 +24,14 @@ public class FireStationService {
 	private MedicalRecordsService medicalRecordsService;
 	
 	
+	public FireStationService(FireStationRepository fireStationRepository, PersonRepository personRepository,
+			MedicalRecordsService medicalRecordsService) {
+		super();
+		this.fireStationRepository = fireStationRepository;
+		this.personRepository = personRepository;
+		this.medicalRecordsService = medicalRecordsService;
+	}
+
 	// Returns a list of persons with their first and last names, their addresses and phone numbers
 	public List<PersonPerStationDTO> personsPerStation(String stationNumber) {
 		

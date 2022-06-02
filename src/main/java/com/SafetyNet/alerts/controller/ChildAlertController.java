@@ -16,6 +16,11 @@ public class ChildAlertController {
 	@Autowired
 	ChildAlertService childAlertService;
 	
+	public ChildAlertController(ChildAlertService childAlertService) {
+		
+		this.childAlertService = childAlertService;
+	}
+
 	@GetMapping("/childAlert")
 	public List<ChildAlertDTO> listOfChildPerAddress(@RequestParam String address) {
 		return childAlertService.listOfChildPerAddress(address);

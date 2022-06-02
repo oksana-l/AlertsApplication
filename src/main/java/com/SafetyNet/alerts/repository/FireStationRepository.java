@@ -15,10 +15,15 @@ public class FireStationRepository {
 	@Autowired
 	private Store store;
 	
+	public FireStationRepository(Store store) {
+		
+		this.store = store;
+	}
+	
 	public List<FireStation> findAll() {
 		return store.getFirestations();
 	}
-	
+
 	public List<FireStation> findByStation(String stationNumber) {
 
 		return store.getFirestations().stream()

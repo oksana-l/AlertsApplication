@@ -14,6 +14,11 @@ public class CommunityEmailService {
 	@Autowired
 	private PersonRepository personRepository;
 	
+	public CommunityEmailService(PersonRepository personRepository) {
+		
+		this.personRepository = personRepository;
+	}
+
 	public List<String> listOfMails(String city) {
 		return personRepository.findAllByCity(city).stream()
 				.map(p -> p.getEmail()).collect(Collectors.toList());

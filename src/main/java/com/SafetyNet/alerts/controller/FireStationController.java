@@ -11,6 +11,11 @@ import com.SafetyNet.alerts.service.FireStationService;
 @RestController
 public class FireStationController {
 
+	public FireStationController(FireStationService fireStationService) {
+		
+		this.fireStationService = fireStationService;
+	}
+
 	@Autowired 
 	private FireStationService fireStationService;
 	

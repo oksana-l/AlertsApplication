@@ -17,6 +17,12 @@ public class PhoneAlertService {
 	@Autowired
 	private PersonRepository personRepository;
 
+	public PhoneAlertService(FireStationRepository fireStationRepository, PersonRepository personRepository) {
+		super();
+		this.fireStationRepository = fireStationRepository;
+		this.personRepository = personRepository;
+	}
+
 	public Set<String> listOfPhonePerNumFireStation(String stationNumber) {
 		
 		Set<String> fireStationAddresses = fireStationRepository.findByStation(stationNumber).stream()

@@ -15,6 +15,11 @@ public class MedicalRecordsRepository {
 	@Autowired
 	private Store store;
 	
+	public MedicalRecordsRepository(Store store) {
+		
+		this.store = store;
+	}
+	
 	public List<MedicalRecords> findAll() {
 		
 		return store.getMedicalrecords();

@@ -12,6 +12,11 @@ import com.SafetyNet.alerts.service.PhoneAlertService;
 @RestController
 public class PhoneAlertController {
 
+	public PhoneAlertController(PhoneAlertService phoneAlertService) {
+		
+		this.phoneAlertService = phoneAlertService;
+	}
+
 	@Autowired
 	private PhoneAlertService phoneAlertService;
 	

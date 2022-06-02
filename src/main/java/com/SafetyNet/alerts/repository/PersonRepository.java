@@ -17,6 +17,7 @@ public class PersonRepository {
 	
 	@Autowired
 	public PersonRepository(Store store) {
+		
 		this.store = store;
 	}
 
@@ -42,6 +43,7 @@ public class PersonRepository {
 	}
 	
 	public Person findPersonByFirstNameAndLastName(String firstName, String lastName) {
+		
 		Person person = new Person();
 		List<Person> persons = findAll();
 		for (Person i : persons) {

@@ -11,6 +11,11 @@ import com.SafetyNet.alerts.service.FireService;
 @RestController
 public class FireController {
 
+	public FireController(FireService dataFireService) {
+		
+		this.dataFireService = dataFireService;
+	}
+
 	@Autowired
 	FireService dataFireService;
 	

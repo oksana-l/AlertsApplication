@@ -14,6 +14,11 @@ public class PersonInfoController {
 	@Autowired
 	private PersonInfoService personInfoService;
 	
+	public PersonInfoController(PersonInfoService personInfoService) {
+		
+		this.personInfoService = personInfoService;
+	}
+
 	@GetMapping("/personInfo")
 	public PersonInfoDTO personInfo(@RequestParam String firstName, String lastName) {
 		return personInfoService.personInfo(firstName, lastName);

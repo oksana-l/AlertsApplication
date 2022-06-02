@@ -15,6 +15,12 @@ public class PersonInfoService {
 	@Autowired
 	private PersonRepository personRepository;
 
+	public PersonInfoService(MedicalRecordsService medicalRecordsService, PersonRepository personRepository) {
+		super();
+		this.medicalRecordsService = medicalRecordsService;
+		this.personRepository = personRepository;
+	}
+
 	public PersonInfoDTO personInfo(String firstName, String lastName) {
 		PersonInfoDTO personInfo = new PersonInfoDTO();
 		Person person = personRepository.findPersonByFirstNameAndLastName(firstName, lastName);
