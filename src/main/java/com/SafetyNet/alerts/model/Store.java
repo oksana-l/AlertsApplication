@@ -4,17 +4,17 @@ import java.util.List;
 
 public class Store {
 	private List<Person> persons;
-	private List<MedicalRecords> medicalrecords;
+	private List<MedicalRecord> medicalRecord;
 	private List<FireStation> firestations;
 	
 	public Store() {
 		super();
 	}
 
-	public Store(List<Person> persons, List<MedicalRecords> medicalrecords, List<FireStation> firestations) {
+	public Store(List<Person> persons, List<MedicalRecord> medicalRecord, List<FireStation> firestations) {
 		super();
 		this.persons = persons;
-		this.medicalrecords = medicalrecords;
+		this.medicalRecord = medicalRecord;
 		this.firestations = firestations;
 	}
 
@@ -26,12 +26,12 @@ public class Store {
 		this.persons = persons;
 	}
 
-	public List<MedicalRecords> getMedicalrecords() {
-		return medicalrecords;
+	public List<MedicalRecord> getMedicalRecord() {
+		return medicalRecord;
 	}
 
-	public void setMedicalrecords(List<MedicalRecords> medicalrecords) {
-		this.medicalrecords = medicalrecords;
+	public void setMedicalRecord(List<MedicalRecord> medicalRecord) {
+		this.medicalRecord = medicalRecord;
 	}
 
 	public List<FireStation> getFirestations() {
@@ -44,7 +44,7 @@ public class Store {
 
 	@Override
 	public String toString() {
-		return "Store :\n [persons=" + persons + ",\n medicalrecords=" + medicalrecords + ",\n firestations=" + firestations
+		return "Store :\n [persons=" + persons + ",\n medicalRecord=" + medicalRecord + ",\n firestations=" + firestations
 				+ "]";
 	}
 	

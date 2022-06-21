@@ -10,7 +10,7 @@ public class PersonDTO {
 	}
 
 	public PersonDTO(String firstName, String lastName) {
-		super();
+		
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}

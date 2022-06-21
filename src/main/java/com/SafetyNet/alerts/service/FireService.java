@@ -14,19 +14,17 @@ import com.SafetyNet.alerts.repository.PersonRepository;
 @Service
 public class FireService {
 	
-	@Autowired
 	private FireStationRepository fireStationRepository;
-	@Autowired
 	private PersonRepository personRepository;
-	@Autowired
-	private MedicalRecordsService medicalRecordsService;
+	private MedicalRecordService medicalRecordService;
 	
+	@Autowired
 	public FireService(FireStationRepository fireStationRepository, PersonRepository personRepository,
-			MedicalRecordsService medicalRecordsService) {
-		super();
+			MedicalRecordService medicalRecordService) {
+		
 		this.fireStationRepository = fireStationRepository;
 		this.personRepository = personRepository;
-		this.medicalRecordsService = medicalRecordsService;
+		this.medicalRecordService = medicalRecordService;
 	}
 
 	public List<FirePersonDTO> listOfFirePersons(String address) {
@@ -36,9 +34,9 @@ public class FireService {
 			firePerson.setFirstName(person.getFirstName());
 			firePerson.setLastName(person.getLastName());
 			firePerson.setPhone(person.getPhone());
-			firePerson.setAge(medicalRecordsService
+			firePerson.setAge(medicalRecordService
 					.getAgeOfPerson(person.getFirstName(), person.getLastName()));
-			firePerson.setMedical(medicalRecordsService
+			firePerson.setMedical(medicalRecordService
 					.findByNameDTO(person.getFirstName(), person.getLastName()));
 			return firePerson;
 		})

@@ -6,36 +6,36 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.SafetyNet.alerts.model.MedicalRecords;
+import com.SafetyNet.alerts.model.MedicalRecord;
 import com.SafetyNet.alerts.model.Store;
 
 @Service
-public class MedicalRecordsRepository {
+public class MedicalRecordRepository {
 	
 	@Autowired
 	private Store store;
 	
-	public MedicalRecordsRepository(Store store) {
+	public MedicalRecordRepository(Store store) {
 		
 		this.store = store;
 	}
 	
-	public List<MedicalRecords> findAll() {
+	public List<MedicalRecord> findAll() {
 		
-		return store.getMedicalrecords();
+		return store.getMedicalRecord();
 	}
 	
-	public MedicalRecords findByName(String firstName, String lastName) {
+	public MedicalRecord findByName(String firstName, String lastName) {
 
-		return store.getMedicalrecords().stream()
+		return store.getMedicalRecord().stream()
 				.filter(fn -> firstName.equals(fn.getFirstName()))
 				.filter(ln -> lastName.equals(ln.getLastName()))
 				.collect(Collectors.toList()).get(0);
 	}
 	
-	public List<MedicalRecords> findByFirstName(String firstName) {
+	public List<MedicalRecord> findByFirstName(String firstName) {
 
-		return store.getMedicalrecords().stream()
+		return store.getMedicalRecord().stream()
 				.filter(fn -> firstName.equals(fn.getFirstName()))
 				.collect(Collectors.toList());
 	}

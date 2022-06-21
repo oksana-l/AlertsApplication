@@ -1,27 +1,38 @@
 package com.SafetyNet.alerts.service;
 
+import static org.mockito.Mockito.when;
+
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import com.SafetyNet.alerts.model.MedicalRecords;
+import com.SafetyNet.alerts.repository.MedicalRecordsRepository;
 
 public class MedicalRecordsServiceTest {
 	
-	@Autowired
+	@Mock
+	private MedicalRecordsRepository medicalRecordsRepository;
+	
+	@InjectMocks
 	private MedicalRecordsService medicalRecordsService;
 
+	@BeforeEach
+	public void setUp() {
+		MockitoAnnotations.openMocks(this);
+	}
+	
 	@Test
 	public void shouldGetAgeOfPersonTest() {
 		
 		MedicalRecords medicalRecords1 = new MedicalRecords("John", "Boyd", "03/06/1984", Arrays.asList("aznol:350mg", "hydrapermazol:100mg"), Arrays.asList("nillacilan"));
-		MedicalRecords medicalRecords2 = new MedicalRecords("Jacob", "Boyd", "03/06/1989", Arrays.asList("pharmacol:5000mg", "terazine:10mg", "noznazol:250mg"), Arrays.asList());
-		MedicalRecords medicalRecords3 = new MedicalRecords("Peter", "Duncan", "09/06/2000", Arrays.asList(), Arrays.asList("shellfish"));
-		List<MedicalRecords> medicalRecords = Arrays.asList(medicalRecords1, medicalRecords2, medicalRecords3);
 		
-		Assertions.assertEquals(38, medicalRecordsService.getAgeOfPerson("John", "Boyd"));
+		when(medicalRecordsRepository.findByName("John", "Boyd")).thenReturn(medicalRecords1);
+		Assertions.assertEquals(date du jour moins 38, medicalRecordsService.getAgeOfPerson("John", "Boyd"));
 	}
 }

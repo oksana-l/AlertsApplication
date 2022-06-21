@@ -2,18 +2,18 @@ package com.SafetyNet.alerts.model;
 
 import java.util.List;
 
-public class MedicalRecords {
+public class MedicalRecord {
 	private String firstName;
 	private String lastName;
 	private String birthdate;
 	private List<String> medications;
 	private List<String> allergies;
 	
-	public MedicalRecords() {
+	public MedicalRecord() {
 		super();
 	}
 
-	public MedicalRecords(String firstName, String lastName, String birthdate, List<String> medications,
+	public MedicalRecord(String firstName, String lastName, String birthdate, List<String> medications,
 			List<String> allergies) {
 		super();
 		this.firstName = firstName;
@@ -65,7 +65,7 @@ public class MedicalRecords {
 
 	@Override
 	public String toString() {
-		return "\n MedicalRecords [firstName=" + firstName + ", lastName=" + lastName + ", birthdate=" + birthdate
+		return "\n MedicalRecord [firstName=" + firstName + ", lastName=" + lastName + ", birthdate=" + birthdate
 				+ ", medications=" + medications + ", allergies=" + allergies + "]";
 	}
 	

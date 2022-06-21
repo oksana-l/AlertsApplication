@@ -18,7 +18,7 @@ public class PhoneAlertService {
 	private PersonRepository personRepository;
 
 	public PhoneAlertService(FireStationRepository fireStationRepository, PersonRepository personRepository) {
-		super();
+		
 		this.fireStationRepository = fireStationRepository;
 		this.personRepository = personRepository;
 	}

@@ -10,10 +10,10 @@ import com.SafetyNet.alerts.repository.PersonRepository;
 
 @Service
 public class CommunityEmailService {
-
-	@Autowired
+	
 	private PersonRepository personRepository;
 	
+	@Autowired
 	public CommunityEmailService(PersonRepository personRepository) {
 		
 		this.personRepository = personRepository;

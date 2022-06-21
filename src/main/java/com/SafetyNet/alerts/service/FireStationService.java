@@ -16,20 +16,16 @@ import com.SafetyNet.alerts.repository.PersonRepository;
 @Service
 public class FireStationService {
 	
-	@Autowired
 	private FireStationRepository fireStationRepository;
-	@Autowired
 	private PersonRepository personRepository;
+	private MedicalRecordService medicalRecordService;
+	
 	@Autowired
-	private MedicalRecordsService medicalRecordsService;
-	
-	
 	public FireStationService(FireStationRepository fireStationRepository, PersonRepository personRepository,
-			MedicalRecordsService medicalRecordsService) {
-		super();
+			MedicalRecordService medicalRecordService) {
 		this.fireStationRepository = fireStationRepository;
 		this.personRepository = personRepository;
-		this.medicalRecordsService = medicalRecordsService;
+		this.medicalRecordService = medicalRecordService;
 	}
 
 	// Returns a list of persons with their first and last names, their addresses and phone numbers
@@ -60,9 +56,9 @@ public class FireStationService {
 		FirestationDTO firestationDTO = new FirestationDTO();
 		List<PersonPerStationDTO> personsPerStation = personsPerStation(stationNumber);
 		firestationDTO.setPersonPerStationDTO(personsPerStation);
-		firestationDTO.setNumberOfMajors(personsPerStation.stream().filter(p -> medicalRecordsService
+		firestationDTO.setNumberOfMajors(personsPerStation.stream().filter(p -> medicalRecordService
 				.getAgeOfPerson(p.getFirstName(), p.getLastName()) > 18).count());
-		firestationDTO.setNumberOfMinors(personsPerStation.stream().filter(p -> medicalRecordsService
+		firestationDTO.setNumberOfMinors(personsPerStation.stream().filter(p -> medicalRecordService
 				.getAgeOfPerson(p.getFirstName(), p.getLastName()) < 18).count());
 		return firestationDTO;
 	}

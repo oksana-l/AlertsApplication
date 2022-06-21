@@ -13,26 +13,25 @@ import com.SafetyNet.alerts.repository.PersonRepository;
 @Service
 public class ChildAlertService {
 	
-	@Autowired
 	private PersonRepository personRepository;
-	@Autowired
-	private MedicalRecordsService medicalRecordsService;
+	private MedicalRecordService medicalRecordService;
 	
-	public ChildAlertService(PersonRepository personRepository, MedicalRecordsService medicalRecordsService) {
-		super();
+	@Autowired
+	public ChildAlertService(PersonRepository personRepository, MedicalRecordService medicalRecordService) {
+		
 		this.personRepository = personRepository;
-		this.medicalRecordsService = medicalRecordsService;
+		this.medicalRecordService = medicalRecordService;
 	}
 
 	public List<ChildAlertDTO> listOfChildPerAddress(String address) {
 		
 		return personRepository.findByAddress(address).stream()
-				.filter(p -> medicalRecordsService.isMinor(p.getFirstName(), p.getLastName()))
+				.filter(p -> medicalRecordService.isMinor(p.getFirstName(), p.getLastName()))
 				.map(child -> {
 					ChildAlertDTO childAlertDTO = new ChildAlertDTO();
 					childAlertDTO.setFirstName(child.getFirstName());
 					childAlertDTO.setLastName(child.getLastName());
-					childAlertDTO.setAge(medicalRecordsService
+					childAlertDTO.setAge(medicalRecordService
 							.getAgeOfPerson(child.getFirstName(), child.getLastName()));
 					return childAlertDTO;
 				})
@@ -42,7 +41,7 @@ public class ChildAlertService {
 	public List<PersonDTO> listOfAdultPerAddress(String address) {
 		
 		return personRepository.findByAddress(address).stream()
-				.filter(p -> medicalRecordsService.isMajor(p.getFirstName(), p.getLastName()))
+				.filter(p -> medicalRecordService.isMajor(p.getFirstName(), p.getLastName()))
 				.map(adult -> {
 					PersonDTO personDTO = new PersonDTO();
 					personDTO.setFirstName(adult.getFirstName());

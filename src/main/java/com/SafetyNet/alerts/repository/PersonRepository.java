@@ -1,6 +1,7 @@
 package com.SafetyNet.alerts.repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,24 +35,12 @@ public class PersonRepository {
 				.collect(Collectors.toList());
 	}
 	
-	public List<Person> findByFirstNameAndLastName(String firstName, String lastName) {
+	public Optional<Person> findByFirstNameAndLastName(String firstName, String lastName) {
 		
 		return store.getPersons().stream()
 				.filter(fm -> firstName.equals(fm.getFirstName()))
 				.filter(ln -> lastName.equals(ln.getLastName()))
-				.collect(Collectors.toList());
-	}
-	
-	public Person findPersonByFirstNameAndLastName(String firstName, String lastName) {
-		
-		Person person = new Person();
-		List<Person> persons = findAll();
-		for (Person i : persons) {
-			if (i.getFirstName().contains(firstName) & i.getLastName().contains(lastName)) {
-				person = i;	
-			}
-		}
-		return person;
+				.findFirst();
 	}
 	
 	public List<Person> findByAddressIn(Set<String> addresses) {
