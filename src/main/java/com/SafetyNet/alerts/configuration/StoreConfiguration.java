@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import com.SafetyNet.alerts.model.Store;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
+@ComponentScan(basePackages = {"com.SafetyNet.alerts"})
 public class StoreConfiguration {
 	
 	@Bean

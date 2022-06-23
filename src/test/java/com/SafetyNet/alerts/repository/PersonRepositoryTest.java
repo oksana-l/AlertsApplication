@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
@@ -25,8 +26,8 @@ public class PersonRepositoryTest {
 		Person person2 = new Person("Jacob", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6513","drk@email.com");
 		Person person3 = new Person("Peter", "Duncan", "644 Gershwin Cir", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
 		persons = new ArrayList(Arrays.asList(person1, person2, person3));
-		Store store = new Store(persons, null, null);
-		personRepository = new PersonRepository(store);	
+		Store store = new Store();
+		personRepository = new PersonRepository();	
 	}
 	
 	@Test
@@ -47,9 +48,9 @@ public class PersonRepositoryTest {
 	
 	@Test
 	public void shouldFindByFirstNameAndLastNameTest() {
-		List<Person> findPerson = personRepository.findByFirstNameAndLastName("Jacob", "Boyd");
+		Optional<Person> findPerson = personRepository.findByFirstNameAndLastName("Jacob", "Boyd");
 		
-		Assertions.assertEquals(persons.get(1), findPerson.get(0));
+		Assertions.assertEquals(persons.get(1), findPerson.get());
 	}
 	
 	@Test

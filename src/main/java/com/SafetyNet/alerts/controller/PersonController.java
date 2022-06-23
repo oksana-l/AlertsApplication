@@ -25,12 +25,11 @@ public class PersonController {
 	 * @param person An object person
 	 */
 	@PostMapping("/person")
-	public void createPerson(@RequestBody Person person) {
+	public ResponseEntity<Person> createPerson(@RequestBody Person person) {
 		try {
-			personService.createPerson(person);
+			return ResponseEntity.status(HttpStatus.CREATED).body(person);
 		} catch (Exception e) {
-			ResponseEntity.status(HttpStatus.CONFLICT).build();
-			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
 	

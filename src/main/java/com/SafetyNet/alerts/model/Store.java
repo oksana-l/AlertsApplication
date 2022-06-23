@@ -1,37 +1,34 @@
 package com.SafetyNet.alerts.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Store {
-	private List<Person> persons;
-	private List<MedicalRecord> medicalRecord;
-	private List<FireStation> firestations;
+	private List<Person> persons = new ArrayList<>();
+	private List<MedicalRecord> medicalrecords = new ArrayList<>();
+	private List<FireStation> firestations = new ArrayList<>();
 	
+
+
 	public Store() {
-		super();
+		
 	}
-
-	public Store(List<Person> persons, List<MedicalRecord> medicalRecord, List<FireStation> firestations) {
-		super();
-		this.persons = persons;
-		this.medicalRecord = medicalRecord;
-		this.firestations = firestations;
-	}
-
+	
+	
 	public List<Person> getPersons() {
 		return persons;
 	}
-
+	
 	public void setPersons(List<Person> persons) {
-		this.persons = persons;
+		this.persons = new ArrayList<>(persons);
 	}
 
-	public List<MedicalRecord> getMedicalRecord() {
-		return medicalRecord;
+	public List<MedicalRecord> getMedicalrecords() {
+		return medicalrecords;
 	}
 
-	public void setMedicalRecord(List<MedicalRecord> medicalRecord) {
-		this.medicalRecord = medicalRecord;
+	public void setMedicalrecords(List<MedicalRecord> medicalrecords) {
+		this.medicalrecords = new ArrayList<>(medicalrecords);
 	}
 
 	public List<FireStation> getFirestations() {
@@ -39,14 +36,7 @@ public class Store {
 	}
 
 	public void setFirestations(List<FireStation> firestations) {
-		this.firestations = firestations;
+		this.firestations = new ArrayList<>(firestations);
 	}
-
-	@Override
-	public String toString() {
-		return "Store :\n [persons=" + persons + ",\n medicalRecord=" + medicalRecord + ",\n firestations=" + firestations
-				+ "]";
-	}
-	
 	
 }

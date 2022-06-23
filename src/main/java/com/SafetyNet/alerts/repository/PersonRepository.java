@@ -14,13 +14,8 @@ import com.SafetyNet.alerts.model.Store;
 @Service
 public class PersonRepository {
 	
-	private Store store;
-	
 	@Autowired
-	public PersonRepository(Store store) {
-		
-		this.store = store;
-	}
+	private Store store;
 
 	public List<Person> findAll() {
 		return store.getPersons();
@@ -61,5 +56,16 @@ public class PersonRepository {
 		return store.getPersons().stream()
 				.filter(c -> city.equals(c.getCity()))
 				.collect(Collectors.toList());
+	}
+	
+	public Person save(Person person) {
+		delete(person.getFirstName(), person.getLastName());
+		store.getPersons().add(person);
+		return person;
+	}
+	
+	public void delete(String firstName, String lastName) {
+		findByFirstNameAndLastName(firstName,lastName)
+			.ifPresent(p -> store.getPersons().remove(p));
 	}
 }

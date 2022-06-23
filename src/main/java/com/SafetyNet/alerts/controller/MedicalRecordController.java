@@ -1,8 +1,7 @@
 package com.SafetyNet.alerts.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +21,12 @@ public class MedicalRecordController {
 	private MedicalRecordService medicalRecordService;
 	
 	@PostMapping("/medicalRecord")
-	public Optional<MedicalRecord> createMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
-		return medicalRecordService.createMedicalRecord(medicalRecord);
+	public ResponseEntity<MedicalRecord> createMedicalRecord(@RequestBody MedicalRecord medicalrecord) {
+    	try {
+    		return ResponseEntity.status(HttpStatus.CREATED).body(medicalrecord); 
+    	} catch (Exception e) {
+ 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+ 		}
 	}
 	
 	@PutMapping("/medicalRecord/{name}")

@@ -25,9 +25,9 @@ public class MedicalRecordService {
 	}
 
 	public int getAgeOfPerson(String firstName, String lastName) {
-		MedicalRecord medicalRecord = medicalRecordRepository
+		Optional<MedicalRecord> medicalRecord = medicalRecordRepository
 				.findByName(firstName, lastName);
-		LocalDate birthdate = LocalDate.parse(medicalRecord
+		LocalDate birthdate = LocalDate.parse(medicalRecord.get()
 				.getbirthdate(), DateTimeFormatter.ofPattern("MM/dd/yyyy"));
 		LocalDate today = LocalDate.now();
 		return Period.between(birthdate, today).getYears();
@@ -43,42 +43,32 @@ public class MedicalRecordService {
 	
 	public MedicalRecordsInfoDTO findByNameDTO(String firstName, String lastName) {
 		
-		MedicalRecordsInfoDTO medicalRecords = new MedicalRecordsInfoDTO();
+		MedicalRecordsInfoDTO medicalrecords = new MedicalRecordsInfoDTO();
 		
-		MedicalRecord medicalRecord = medicalRecordRepository
+		Optional<MedicalRecord> medicalrecord = medicalRecordRepository
 				.findByName(firstName, lastName);
-		medicalRecords.setMedications(medicalRecord.getMedications());
-		medicalRecords.setAllergies(medicalRecord.getAllergies());
-		return medicalRecords;				
+		medicalrecords.setMedications(medicalrecord.get().getMedications());
+		medicalrecords.setAllergies(medicalrecord.get().getAllergies());
+		return medicalrecords;				
 	}
 	
-	public Optional<MedicalRecord> getMedicalRecord(String name) {
+	public Optional<MedicalRecord> getMedicalrecord(String name) {
 		String firstName = name.split(" ")[0];
 		String lastName= name.split(" ")[1];
-		return Optional.ofNullable(medicalRecordRepository.findByName(firstName, lastName));
+		return medicalRecordRepository.findByName(firstName, lastName);
 	}
 	
 	
-	public Optional<MedicalRecord> createMedicalRecord(MedicalRecord medicalRecordToCreate) {
-		return getMedicalRecord(medicalRecordToCreate.getFirstName() + " " + medicalRecordToCreate.getLastName())
-				.map(mr -> {
-					
-					mr.setFirstName(medicalRecordToCreate.getFirstName());
-					
-					mr.setLastName(medicalRecordToCreate.getLastName());
-					
-					mr.setbirthdate(medicalRecordToCreate.getbirthdate());
-					
-					mr.setMedications(medicalRecordToCreate.getMedications());
-
-					mr.setAllergies(medicalRecordToCreate.getAllergies());
-					
-					return mr;
-				});
+	public MedicalRecord createMedicalRecord(MedicalRecord medicalRecordToCreate) throws Exception {
+		Optional<MedicalRecord> mr = medicalRecordRepository.findByName(medicalRecordToCreate.getFirstName(), medicalRecordToCreate.getLastName());
+		if (mr.isPresent()) {
+			throw new Exception("Medicalrecord already exists");
+		}
+		return medicalRecordRepository.save(medicalRecordToCreate);
 	}
 	
 	public Optional<MedicalRecord> updateMedicalRecord(String name, UpdateMedicalRecordRequest medicalRecordToUpdate) {
-		return getMedicalRecord(name).map(mr -> {
+		return getMedicalrecord(name).map(mr -> {
 
 			
 			mr.setbirthdate(medicalRecordToUpdate.getBirthdate());
@@ -92,7 +82,7 @@ public class MedicalRecordService {
 	}
 	
 	public void deleteMedicalRecord(String name) {
-		getMedicalRecord(name);
+		getMedicalrecord(name);
 		Optional.ofNullable(null);
 	}
 }

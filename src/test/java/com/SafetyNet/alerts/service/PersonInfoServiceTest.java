@@ -24,12 +24,12 @@ public class PersonInfoServiceTest {
 	MedicalRecord medicalRecord3 = new MedicalRecord("Peter", "Duncan", "09/06/2000", Arrays.asList(), Arrays.asList("shellfish"));
 	List<MedicalRecord> medicalRecord = Arrays.asList(medicalRecord1, medicalRecord2, medicalRecord3);
 	
-	Store store = new Store(persons, medicalRecord, null);
-	PersonRepository personRepository = new PersonRepository(store);
+	Store store = new Store();
+	PersonRepository personRepository = new PersonRepository();
 	
 	@Test
 	public void shouldPersonInfoTest() {
-		PersonInfoService personInfoService = new PersonInfoService();
+		PersonInfoService personInfoService = new PersonInfoService(null, personRepository);
 		PersonInfoDTO personInfo = personInfoService.personInfo(person1.getFirstName(), person1.getLastName());
 		
 		Assertions.assertEquals("John Boyd", personInfo.getName());

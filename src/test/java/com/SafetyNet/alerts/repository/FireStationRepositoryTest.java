@@ -18,8 +18,8 @@ public class FireStationRepositoryTest {
 		Person person2 = new Person("Jacob", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6513","drk@email.com");
 		Person person3 = new Person("Peter", "Duncan", "644 Gershwin Cir", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
 		List<Person> persons = new ArrayList<Person>(Arrays.asList(person1, person2, person3));
-		Store store = new Store(persons, null, null);
-		PersonRepository personRepository = new PersonRepository(store);
+		Store store = new Store();
+		PersonRepository personRepository = new PersonRepository();
 		List<Person> findPerson = personRepository.findByFirstName("Peter");
 		
 		Assertions.assertEquals(1, findPerson.size());
