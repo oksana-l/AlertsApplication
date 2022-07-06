@@ -13,9 +13,13 @@ import com.SafetyNet.alerts.model.Store;
 @Service
 public class MedicalRecordRepository {
 
-	@Autowired
 	private Store store;
 
+	@Autowired
+	public MedicalRecordRepository(Store store) {
+		this.store = store;
+	}
+	
 	public List<MedicalRecord> findAll() {                  
 		return store.getMedicalrecords();
 	}
@@ -46,5 +50,4 @@ public class MedicalRecordRepository {
 	public void delete(String firstName, String lastName) {
 		findByName(firstName,lastName).ifPresent(p -> store.getMedicalrecords().remove(p));
 	}
-
 }

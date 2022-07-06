@@ -22,9 +22,9 @@ public class StoreTest {
 		MedicalRecord medicalRecord3 = new MedicalRecord("Peter", "Duncan", "09/06/2000", Arrays.asList(), Arrays.asList("shellfish"));
 		List<MedicalRecord> medicalRecords = Arrays.asList(medicalRecord1, medicalRecord2, medicalRecord3);
 		
-		FireStation firestation1 = new FireStation("1509 Culver St", "3");
+		FireStation firestation1 = new FireStation("1509 Culver St", "1");
 		FireStation firestation2 = new FireStation("834 Binoc Ave", "2");
-		FireStation firestation3 = new FireStation("947 E. Rose Dr", "1");
+		FireStation firestation3 = new FireStation("947 E. Rose Dr", "3");
 		List<FireStation> firestations = Arrays.asList(firestation1, firestation2, firestation3);
 		
 		Store newStore = new Store();

@@ -10,12 +10,12 @@ public class MedicalRecord {
 	private List<String> allergies;
 	
 	public MedicalRecord() {
-		super();
+		
 	}
 
 	public MedicalRecord(String firstName, String lastName, String birthdate, List<String> medications,
 			List<String> allergies) {
-		super();
+		
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.birthdate = birthdate;
