@@ -60,16 +60,17 @@ public class MedicalRecordService {
 	
 	
 	public MedicalRecord createMedicalRecord(MedicalRecord medicalRecordToCreate) throws Exception {
-		Optional<MedicalRecord> mr = medicalRecordRepository.findByName(medicalRecordToCreate.getFirstName(), medicalRecordToCreate.getLastName());
+		Optional<MedicalRecord> mr = medicalRecordRepository
+				.findByName(medicalRecordToCreate.getFirstName(), medicalRecordToCreate.getLastName());
 		if (mr.isPresent()) {
 			throw new Exception("Medicalrecord already exists");
 		}
 		return medicalRecordRepository.save(medicalRecordToCreate);
 	}
 	
-	public Optional<MedicalRecord> updateMedicalRecord(String name, UpdateMedicalRecordRequest medicalRecordToUpdate) {
+	public Optional<MedicalRecord> updateMedicalRecord(String name, 
+			UpdateMedicalRecordRequest medicalRecordToUpdate) {
 		return getMedicalrecord(name).map(mr -> {
-
 			
 			mr.setbirthdate(medicalRecordToUpdate.getBirthdate());
 			
@@ -77,12 +78,13 @@ public class MedicalRecordService {
 
 			mr.setAllergies(medicalRecordToUpdate.getAllergies());
 
-			return mr;
+			return medicalRecordRepository.save(mr);
 		});
 	}
 	
 	public void deleteMedicalRecord(String name) {
-		getMedicalrecord(name);
-		Optional.ofNullable(null);
+		String firstName = name.split(" ")[0];
+		String lastName= name.split(" ")[1];
+		medicalRecordRepository.delete(firstName,lastName);
 	}
 }

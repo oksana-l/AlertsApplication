@@ -8,13 +8,6 @@ public class Store {
 	private List<MedicalRecord> medicalrecords = new ArrayList<>();
 	private List<FireStation> firestations = new ArrayList<>();
 	
-
-
-	public Store() {
-		
-	}
-	
-	
 	public List<Person> getPersons() {
 		return persons;
 	}

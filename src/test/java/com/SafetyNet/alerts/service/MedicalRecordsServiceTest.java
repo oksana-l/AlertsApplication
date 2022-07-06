@@ -2,6 +2,9 @@ package com.SafetyNet.alerts.service;
 
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -31,9 +34,16 @@ public class MedicalRecordsServiceTest {
 	@Test
 	public void shouldGetAgeOfPersonTest() {
 		
-		Optional<MedicalRecord> medicalRecords1 = Optional.ofNullable(new MedicalRecord("John", "Boyd", "03/06/1984", Arrays.asList("aznol:350mg", "hydrapermazol:100mg"), Arrays.asList("nillacilan")));
+		Optional<MedicalRecord> medicalRecords1 = Optional.ofNullable(new MedicalRecord("John", "Boyd", "03/06/1984",
+				Arrays.asList("aznol:350mg", "hydrapermazol:100mg"), Arrays.asList("nillacilan")));
 		
 		when(medicalRecordsRepository.findByName("John", "Boyd")).thenReturn(medicalRecords1);
-		Assertions.assertEquals("date du jour moins 38", medicalRecordsService.getAgeOfPerson("John", "Boyd"));
+		
+		int ageTest = Period.between(LocalDate.parse(medicalRecords1.get().getbirthdate(), 
+				DateTimeFormatter.ofPattern("MM/dd/yyyy")), LocalDate.now()).getYears();
+		
+		Assertions.assertEquals(ageTest, medicalRecordsService.getAgeOfPerson("John", "Boyd"));
+		
 	}
 }
+

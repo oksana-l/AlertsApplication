@@ -9,15 +9,19 @@ import com.SafetyNet.alerts.repository.PersonRepository;
 @Service
 public class PersonInfoService {
 
-	private MedicalRecordService medicalRecordService;
+	private MedicalRecordService medicalrecordsService;
 	private PersonRepository personRepository;
 
 	@Autowired
-	public PersonInfoService(MedicalRecordService medicalRecordService, PersonRepository personRepository) {
-		this.medicalRecordService = medicalRecordService;
+	public PersonInfoService(MedicalRecordService medicalrecordsService, PersonRepository personRepository) {
+		this.medicalrecordsService = medicalrecordsService;
 		this.personRepository = personRepository;
 	}
 
+	/**
+	 * @return the name, address, age, email address and medical history
+	 * 		  (medication, dosage, allergies) of each resident
+	 */
 	public PersonInfoDTO personInfo(String firstName, String lastName) {
 		PersonInfoDTO personInfo = new PersonInfoDTO();
 		personRepository.findByFirstNameAndLastName(firstName, lastName).ifPresent(person -> {
@@ -25,9 +29,9 @@ public class PersonInfoService {
 			personInfo.setEmail(person.getEmail());
 		});
 		personInfo.setName(firstName + " " + lastName);
-		personInfo.setAge(medicalRecordService.getAgeOfPerson(firstName, lastName));
-		personInfo.setMedicalRecords(medicalRecordService
-				.findByNameDTO(firstName, lastName));
+		personInfo.setAge(medicalrecordsService.getAgeOfPerson(firstName, lastName));
+		personInfo.setMedicalRecords(medicalrecordsService
+				.findByNameDTO(firstName, lastName)); // verifier le nom de la methode
 		return personInfo;
 	}
 }

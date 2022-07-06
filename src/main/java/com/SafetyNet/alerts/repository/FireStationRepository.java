@@ -13,11 +13,10 @@ import com.SafetyNet.alerts.model.Store;
 @Service
 public class FireStationRepository {
 
-	@Autowired
 	private Store store;
 
+	@Autowired
 	public FireStationRepository(Store store) {
-
 		this.store = store;
 	}
 
@@ -39,20 +38,19 @@ public class FireStationRepository {
 				.collect(Collectors.toList());
 	}	
 
-	public Optional<FireStation> getFirestation(String stationNumber, String stationAddress) {
+	public Optional<FireStation> getFirestation(String stationAddress) {
 		return store.getFirestations().stream()
-				.filter(s -> stationNumber.equals(s.getStation()))
 				.filter(s -> stationAddress.equals(s.getAddress()))
 				.findFirst();
 	}
 	public FireStation save(FireStation firestation) {
-		delete(firestation.getStation(), firestation.getAddress());
+		delete(firestation.getAddress());
 		store.getFirestations().add(firestation);
 		return firestation;
 	}
 
-	public void delete(String stationNumber, String stationAddress) {
-		getFirestation(stationNumber, stationAddress)
+	public void delete(String stationAddress) {
+		getFirestation(stationAddress)
 			.ifPresent(p -> store.getFirestations().remove(p));
 	}
 }

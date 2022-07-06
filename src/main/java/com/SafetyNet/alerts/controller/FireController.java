@@ -10,14 +10,14 @@ import com.SafetyNet.alerts.service.FireService;
 
 @RestController
 public class FireController {
+	
+	private FireService dataFireService;
 
+	@Autowired
 	public FireController(FireService dataFireService) {
 		
 		this.dataFireService = dataFireService;
 	}
-
-	@Autowired
-	FireService dataFireService;
 	
 	@GetMapping("/fire")
 	public FireDTO listOfDataFire(@RequestParam String address) {

@@ -1,7 +1,5 @@
 package com.SafetyNet.alerts.repository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.SafetyNet.alerts.StoreTest;
 import com.SafetyNet.alerts.model.Person;
 import com.SafetyNet.alerts.model.Store;
 
@@ -21,20 +20,16 @@ public class PersonRepositoryTest {
 
 	@BeforeEach
 	public void setUp() {
-		
-		Person person1 = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
-		Person person2 = new Person("Jacob", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6513","drk@email.com");
-		Person person3 = new Person("Peter", "Duncan", "644 Gershwin Cir", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
-		persons = new ArrayList(Arrays.asList(person1, person2, person3));
-		Store store = new Store();
-		personRepository = new PersonRepository();	
+		Store testStore = StoreTest.testStore();
+		personRepository = new PersonRepository(testStore);	
+		persons = testStore.getPersons();
 	}
 	
 	@Test
 	public void shouldFindAllTest() {
 		List<Person> findAll = personRepository.findAll();
 		
-		Assertions.assertEquals(3, findAll.size());
+		Assertions.assertEquals(persons.size(), findAll.size());
 	}
 	
 	@Test

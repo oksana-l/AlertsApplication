@@ -27,7 +27,8 @@ public class PersonService {
 	}
 
 	public Person createPerson(Person personToCreate) throws Exception {
-		Optional<Person> p = personRepository.findByFirstNameAndLastName(personToCreate.getFirstName(), personToCreate.getLastName());
+		Optional<Person> p = personRepository
+				.findByFirstNameAndLastName(personToCreate.getFirstName(), personToCreate.getLastName());
 		if (p.isPresent()) {
 			throw new Exception("Person alredy exists");
 		}
@@ -45,8 +46,8 @@ public class PersonService {
 			person.setZip(personToUpdate.getZip());
 
 			person.setPhone(personToUpdate.getPhone());
-
-			Optional.ofNullable(personToUpdate.getEmail()).ifPresent(email -> person.setEmail(email));
+			
+			person.setEmail(personToUpdate.getEmail());
 
 			return personRepository.save(person);
 		});

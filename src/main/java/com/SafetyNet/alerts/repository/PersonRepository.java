@@ -14,8 +14,12 @@ import com.SafetyNet.alerts.model.Store;
 @Service
 public class PersonRepository {
 	
-	@Autowired
 	private Store store;
+
+	@Autowired
+	public PersonRepository(Store store) {	
+		this.store = store;
+	}
 
 	public List<Person> findAll() {
 		return store.getPersons();
@@ -24,8 +28,6 @@ public class PersonRepository {
 	public List<Person> findByFirstName(String firstName) {
 
 		return store.getPersons().stream()
-//				.map(Person::getFirstName)
-//				.map(p -> p.getFirstName())
 				.filter(fm -> firstName.equals(fm.getFirstName()))
 				.collect(Collectors.toList());
 	}

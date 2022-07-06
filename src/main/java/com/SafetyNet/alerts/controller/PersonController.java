@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SafetyNet.alerts.dto.UpdatePersonRequest;
@@ -27,7 +28,8 @@ public class PersonController {
 	@PostMapping("/person")
 	public ResponseEntity<Person> createPerson(@RequestBody Person person) {
 		try {
-			return ResponseEntity.status(HttpStatus.CREATED).body(person);
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.body(personService.createPerson(person));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
@@ -50,6 +52,7 @@ public class PersonController {
 	 * 
 	 */
 	@DeleteMapping("/person/{name}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deletePerson(@PathVariable("name") final String name) {
 		personService.deletePerson(name);
 	}

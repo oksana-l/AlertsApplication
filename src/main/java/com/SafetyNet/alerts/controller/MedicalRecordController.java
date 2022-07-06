@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SafetyNet.alerts.dto.UpdateMedicalRecordRequest;
@@ -23,7 +24,8 @@ public class MedicalRecordController {
 	@PostMapping("/medicalRecord")
 	public ResponseEntity<MedicalRecord> createMedicalRecord(@RequestBody MedicalRecord medicalrecord) {
     	try {
-    		return ResponseEntity.status(HttpStatus.CREATED).body(medicalrecord); 
+    		return ResponseEntity.status(HttpStatus.CREATED).body(medicalRecordService
+    				.createMedicalRecord(medicalrecord)); 
     	} catch (Exception e) {
  			return ResponseEntity.status(HttpStatus.CONFLICT).build();
  		}
@@ -37,6 +39,7 @@ public class MedicalRecordController {
 		}
 	
 	@DeleteMapping("/medicalRecord/{name}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteMedicalRecord(@PathVariable("name") final String name) {
 		medicalRecordService.deleteMedicalRecord(name);
 	}

@@ -23,3 +23,17 @@
 		}
 	}
 	---------------------------------------------------------------------------------------------
+	// Trois facons d'utiliser des lambdas
+		public List<Person> findByFirstName(String firstName) {
+
+		return store.getPersons().stream()
+//				.map(Person::getFirstName)
+//				.map(p -> p.getFirstName())
+				.filter(fm -> firstName.equals(fm.getFirstName()))
+				.collect(Collectors.toList());
+	}
+	
+-----------------------------------------------------------------------------------------------------
+// Une autre facon travailler avec les Optionals
+	
+			Optional.ofNullable(personToUpdate.getEmail()).ifPresent(email -> person.setEmail(email));

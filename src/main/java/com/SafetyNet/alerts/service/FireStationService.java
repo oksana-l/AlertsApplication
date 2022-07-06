@@ -61,18 +61,18 @@ public class FireStationService {
 	
 	public FireStation createFireStation(FireStation fireStationToCreate) throws Exception {
 		Optional<FireStation> p = fireStationRepository
-				.getFirestation(fireStationToCreate.getStation(), fireStationToCreate.getAddress());
+				.getFirestation(fireStationToCreate.getAddress());
 		if (p.isPresent()) {
-			throw new Exception("Person alredy exists");
+			throw new Exception("Firestation alredy exists");
 		}
 		return fireStationRepository.save(fireStationToCreate);
 
 	}
 
-	public Optional<FireStation> updateFireStation(String stationNumber, String stationAddress, 
+	public Optional<FireStation> updateFireStation(String stationAddress, 
 			FireStation fireStationToUpdate) {
 		
-		return fireStationRepository.getFirestation(stationNumber, stationAddress).map(firestation -> {
+		return fireStationRepository.getFirestation(stationAddress).map(firestation -> {
 
 			firestation.setAddress(fireStationToUpdate.getAddress());
 
@@ -82,9 +82,7 @@ public class FireStationService {
 		});
 	}
 
-	public void deleteFireStation(String name) {
-		String firstName = name.split(" ")[0];
-		String lastName= name.split(" ")[1];
-		personRepository.delete(firstName,lastName);
+	public void deleteFireStation(String address) {
+		fireStationRepository.delete(address);
 	}
 }
