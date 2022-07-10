@@ -31,7 +31,7 @@ public class FireStationService {
 	}
 
 	// Returns a list of persons with their first and last names, their addresses and phone numbers
-	public List<PersonPerStationDTO> personsPerStation(String stationNumber) {
+	public List<PersonPerStationDTO> infoPersonsPerStation(String stationNumber) {
 
 		Set<String> fireStationsAddress = fireStationRepository.findByStation(stationNumber)
 				.stream().map(fireStation -> fireStation.getAddress()).collect(Collectors.toSet());
@@ -43,14 +43,14 @@ public class FireStationService {
 
 	// Returns a list of persons with their first and last names
 	public List<PersonDTO> personPerStation(String stationNumber) {
-		return personsPerStation(stationNumber)
+		return infoPersonsPerStation(stationNumber)
 				.stream().map(p -> new PersonDTO(p.getFirstName(), p.getLastName()))
 				.collect(Collectors.toList());
 	}
 
 	public FirestationDTO personsPerStationAndAge(String stationNumber) {
 		FirestationDTO firestationDTO = new FirestationDTO();
-		List<PersonPerStationDTO> personsPerStation = personsPerStation(stationNumber);
+		List<PersonPerStationDTO> personsPerStation = infoPersonsPerStation(stationNumber);
 		firestationDTO.setPersonPerStationDTO(personsPerStation);
 		firestationDTO.setNumberOfMajors(personsPerStation.stream() .filter(p -> medicalRecordService
 				.getAgeOfPerson(p.getFirstName(), p.getLastName()) > 18).count());

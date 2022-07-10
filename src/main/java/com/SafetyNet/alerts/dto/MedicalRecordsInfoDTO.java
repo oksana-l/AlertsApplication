@@ -7,11 +7,11 @@ public class MedicalRecordsInfoDTO {
 	private List<String> allergies;
 	
 	public MedicalRecordsInfoDTO() {
-		super();
+		
 	}
 	
 	public MedicalRecordsInfoDTO(List<String> medications, List<String> allergies) {
-		super();
+		
 		this.medications = medications;
 		this.allergies = allergies;
 	}

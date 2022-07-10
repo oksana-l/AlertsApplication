@@ -13,7 +13,7 @@ import com.SafetyNet.alerts.repository.PersonRepository;
 public class PersonService {
 
 	private PersonRepository personRepository;
-
+	
 	@Autowired
 	public PersonService(PersonRepository personRepository) {
 
@@ -33,7 +33,6 @@ public class PersonService {
 			throw new Exception("Person alredy exists");
 		}
 		return personRepository.save(personToCreate);
-
 	}
 
 	public Optional<Person> updatePerson(String name, UpdatePersonRequest personToUpdate) {

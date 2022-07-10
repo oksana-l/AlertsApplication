@@ -11,12 +11,11 @@ import com.SafetyNet.alerts.repository.PersonRepository;
 
 @Service
 public class PhoneAlertService {
-	
-	@Autowired
+
 	private FireStationRepository fireStationRepository;
-	@Autowired
 	private PersonRepository personRepository;
 
+	@Autowired
 	public PhoneAlertService(FireStationRepository fireStationRepository, PersonRepository personRepository) {
 		
 		this.fireStationRepository = fireStationRepository;

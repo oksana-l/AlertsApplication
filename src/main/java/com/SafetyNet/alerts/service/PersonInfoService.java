@@ -31,7 +31,7 @@ public class PersonInfoService {
 		personInfo.setName(firstName + " " + lastName);
 		personInfo.setAge(medicalrecordsService.getAgeOfPerson(firstName, lastName));
 		personInfo.setMedicalRecords(medicalrecordsService
-				.findByNameDTO(firstName, lastName)); // verifier le nom de la methode
+				.medicalrecordFindByName(firstName, lastName)); // verifier le nom de la methode
 		return personInfo;
 	}
 }

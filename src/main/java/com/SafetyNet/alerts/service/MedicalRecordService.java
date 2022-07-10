@@ -41,7 +41,7 @@ public class MedicalRecordService {
 		return getAgeOfPerson(firstName, lastName) > 19;
 	}
 	
-	public MedicalRecordsInfoDTO findByNameDTO(String firstName, String lastName) {
+	public MedicalRecordsInfoDTO medicalrecordFindByName(String firstName, String lastName) {
 		
 		MedicalRecordsInfoDTO medicalrecords = new MedicalRecordsInfoDTO();
 		
@@ -59,13 +59,13 @@ public class MedicalRecordService {
 	}
 	
 	
-	public MedicalRecord createMedicalRecord(MedicalRecord medicalRecordToCreate) throws Exception {
+	public MedicalRecord createMedicalRecord(MedicalRecord medicalrecordToCreate) throws Exception {
 		Optional<MedicalRecord> mr = medicalRecordRepository
-				.findByName(medicalRecordToCreate.getFirstName(), medicalRecordToCreate.getLastName());
+				.findByName(medicalrecordToCreate.getFirstName(), medicalrecordToCreate.getLastName());
 		if (mr.isPresent()) {
 			throw new Exception("Medicalrecord already exists");
 		}
-		return medicalRecordRepository.save(medicalRecordToCreate);
+		return medicalRecordRepository.save(medicalrecordToCreate);
 	}
 	
 	public Optional<MedicalRecord> updateMedicalRecord(String name, 
@@ -85,6 +85,6 @@ public class MedicalRecordService {
 	public void deleteMedicalRecord(String name) {
 		String firstName = name.split(" ")[0];
 		String lastName= name.split(" ")[1];
-		medicalRecordRepository.delete(firstName,lastName);
+		medicalRecordRepository.delete(firstName, lastName);
 	}
 }
