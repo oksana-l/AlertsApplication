@@ -48,11 +48,12 @@ public class FireStationService {
 				.collect(Collectors.toList());
 	}
 
+	// Returns a list of persons sort by age with their first and last names
 	public FirestationDTO personsPerStationAndAge(String stationNumber) {
 		FirestationDTO firestationDTO = new FirestationDTO();
 		List<PersonPerStationDTO> personsPerStation = infoPersonsPerStation(stationNumber);
 		firestationDTO.setPersonPerStationDTO(personsPerStation);
-		firestationDTO.setNumberOfMajors(personsPerStation.stream() .filter(p -> medicalRecordService
+		firestationDTO.setNumberOfMajors(personsPerStation.stream().filter(p -> medicalRecordService
 				.getAgeOfPerson(p.getFirstName(), p.getLastName()) > 18).count());
 		firestationDTO.setNumberOfMinors(personsPerStation.stream().filter(p -> medicalRecordService
 				.getAgeOfPerson(p.getFirstName(), p.getLastName()) < 18).count());

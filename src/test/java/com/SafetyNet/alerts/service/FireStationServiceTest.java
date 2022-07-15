@@ -1,72 +1,93 @@
 package com.SafetyNet.alerts.service;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import java.util.List;
 
-import java.util.Optional;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.SafetyNet.alerts.StoreTest;
+import com.SafetyNet.alerts.dto.FirestationDTO;
+import com.SafetyNet.alerts.dto.PersonDTO;
+import com.SafetyNet.alerts.dto.PersonPerStationDTO;
 import com.SafetyNet.alerts.model.FireStation;
+import com.SafetyNet.alerts.model.Store;
 import com.SafetyNet.alerts.repository.FireStationRepository;
+import com.SafetyNet.alerts.repository.MedicalRecordRepository;
 import com.SafetyNet.alerts.repository.PersonRepository;
 
 public class FireStationServiceTest {
 
 	FireStationRepository fireStationRepository;
 	PersonRepository personRepository;
-	MedicalRecordService medicalRecordService;
+	MedicalRecordRepository medicalRecordRepository;
 	FireStationService fireStationService;
 	FireStation firestation;
+	List<FireStation> firestations;
 	
 	@BeforeEach
 	public void setUp() {
-		fireStationRepository = mock(FireStationRepository.class);
-		personRepository = mock(PersonRepository.class);
-		medicalRecordService = mock(MedicalRecordService.class);
+		Store testStore = StoreTest.testStore();
+		fireStationRepository = new FireStationRepository(testStore);
+		personRepository = new PersonRepository(testStore);
+		medicalRecordRepository = new MedicalRecordRepository(testStore);
 		fireStationService = new FireStationService(fireStationRepository, 
-			personRepository, medicalRecordService);
-		firestation = new FireStation("834 Binoc Ave", "2");
+								personRepository, new MedicalRecordService(medicalRecordRepository));
+		firestations = testStore.getFirestations();
+		firestation = new FireStation("146 Liberty St","4");
 	}
 	
 	@Test
 	public void shouldInfoPersonsPerStationTest() {
-		
+		List<PersonPerStationDTO> listOfPersons = fireStationService.infoPersonsPerStation("1");
+		Assertions.assertEquals(2, listOfPersons.size());
 	}
 	
 	@Test
 	public void shouldPersonPerStationTest() {
-		
+
+		List<PersonDTO> listOfPersons = fireStationService.personPerStation("1");
+		Assertions.assertEquals(2, listOfPersons.size());
 	}
 	
 	@Test
 	public void shouldPersonsPerStationAndAge() {
+		FirestationDTO infoTest = fireStationService.personsPerStationAndAge("1");
 		
+		Assertions.assertEquals(2, infoTest.getNumberOfMajors());
+		Assertions.assertEquals(0, infoTest.getNumberOfMinors());
+		Assertions.assertEquals(2,  infoTest.getPersonPerStationDTO().size());
 	}
 	
 	@Test
+	public void shouldExceptionCreateFireStationTest() throws Exception {
+		
+		Assertions.assertThrows(Exception.class, () -> fireStationService
+				.createFireStation(firestations.get(0)));
+	}
+		
+	@Test
 	public void shouldCreateFireStationTest() throws Exception {
-		FireStation firestationToCreate = new FireStation(); 
-		when(fireStationRepository.getFirestation(any(String.class)))
-			.thenReturn(Optional.of(firestation));
-		fireStationService.createFireStation(firestationToCreate);
-		verify(fireStationRepository, times(1)).save(firestationToCreate);
+		fireStationService.createFireStation(firestation);
+		
+		Assertions.assertEquals(4, firestations.size());
+		Assertions.assertEquals("4", firestations.get(3).getStation());
+		Assertions.assertEquals("146 Liberty St", firestations.get(3).getAddress());
 	}
 	
 	@Test
 	public void shouldUpdateFireStation() {
+		fireStationService.updateFireStation(firestations.get(2).getAddress(), firestation);
 		
+		Assertions.assertEquals("146 Liberty St", firestations.get(2).getAddress());
+		Assertions.assertEquals("4", firestations.get(2).getStation());
+		Assertions.assertEquals(3, firestations.size());	
 	}
 	
 	@Test
 	public void shouldDeleteFireStationTest() {
-		doNothing().when(fireStationRepository).delete(any(String.class));
-		fireStationService.deleteFireStation(firestation.getAddress());
-		verify(fireStationRepository, times(1)).delete(firestation.getAddress());
+		fireStationService.deleteFireStation(firestations.get(0).getAddress());
+		
+		Assertions.assertEquals(2, firestations.size());
 	}
 }

@@ -42,9 +42,25 @@ public class FireControllerTest {
 	public void shouldLoadListOfDataFire() throws Exception {
 
 		when(dataFireService.listOfDataFire("123"))
-		.thenReturn(new FireDTO(Arrays.asList(new FirePersonDTO(), new FirePersonDTO("John", "Boyd", 38, "841-874-6512",
-			new MedicalRecordsInfoDTO(Arrays.asList("medications[aznol:350mg, hydrapermazol:100mg]"),
-					Arrays.asList("allergies:[nillacilan]")))), Arrays.asList("2", "3")));
+			.thenReturn(
+				new FireDTO(
+					Arrays.asList(
+						new FirePersonDTO(), 
+						new FirePersonDTO(
+							"John", 
+							"Boyd", 
+							38, 
+							"841-874-6512",
+							new MedicalRecordsInfoDTO(
+								Arrays.asList("aznol:350mg", "hydrapermazol:100mg"),
+								Arrays.asList("nillacilan")
+							)
+						)
+					), 
+					Arrays.asList("2", "3")
+				)
+			);
+		
 		mockMvc.perform( 							
 			MockMvcRequestBuilders.get("/fire?address=123")	
 			.accept(MediaType.APPLICATION_JSON))
@@ -54,7 +70,14 @@ public class FireControllerTest {
 		.andExpect(jsonPath("$.listOfFirePerson[1].lastName").value("Boyd"))
 		.andExpect(jsonPath("$.listOfFirePerson[1].age").value(38))
 		.andExpect(jsonPath("$.listOfFirePerson[1].phone").value("841-874-6512"))
-		//.andExpect(jsonPath("$.listOfFirePerson[1].medical").)
+		.andExpect(jsonPath("$.listOfFirePerson[1].medical.medications").isArray())
+		.andExpect(jsonPath("$.listOfFirePerson[1].medical.medications.length()").value(2))
+		.andExpect(jsonPath("$.listOfFirePerson[1].medical.medications[0]").value("aznol:350mg"))
+		.andExpect(jsonPath("$.listOfFirePerson[1].medical.medications[1]").value("hydrapermazol:100mg"))
+		.andExpect(jsonPath("$.listOfFirePerson[1].medical.allergies").isArray())
+		.andExpect(jsonPath("$.listOfFirePerson[1].medical.allergies.length()").value(1))
+		.andExpect(jsonPath("$.listOfFirePerson[1].medical.allergies[0]").value("nillacilan"))
+		
 		.andExpect(jsonPath("$.numberFireStation[0]").value("2"));
 	}
 }
