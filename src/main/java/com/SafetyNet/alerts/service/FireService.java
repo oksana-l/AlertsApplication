@@ -37,7 +37,7 @@ public class FireService {
 			firePerson.setAge(medicalRecordService
 					.getAgeOfPerson(person.getFirstName(), person.getLastName()));
 			firePerson.setMedical(medicalRecordService
-					.medicalrecordFindByName(person.getFirstName(), person.getLastName()));
+					.medicalrecordFindByFirstNameAndLastName(person.getFirstName(), person.getLastName()));
 			return firePerson;
 		})
 		.collect(Collectors.toList());

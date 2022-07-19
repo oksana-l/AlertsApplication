@@ -41,7 +41,7 @@ public class MedicalRecordService {
 		return getAgeOfPerson(firstName, lastName) > 19;
 	}
 	
-	public MedicalRecordsInfoDTO medicalrecordFindByName(String firstName, String lastName) {
+	public MedicalRecordsInfoDTO medicalrecordFindByFirstNameAndLastName(String firstName, String lastName) {
 		
 		MedicalRecordsInfoDTO medicalrecords = new MedicalRecordsInfoDTO();
 		

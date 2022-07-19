@@ -49,7 +49,7 @@ public class FloodService {
 					personFlood.setAge(medicalRecordService
 							.getAgeOfPerson(p.getFirstName(), p.getLastName()));
 					personFlood.setMedicalRecords(medicalRecordService
-							.medicalrecordFindByName(p.getFirstName(), p.getLastName()));
+							.medicalrecordFindByFirstNameAndLastName(p.getFirstName(), p.getLastName()));
 					return personFlood;
 			}) 
 				.collect(Collectors.toList()));

@@ -51,11 +51,11 @@ public class FireStationServiceTest {
 	}
 	
 	@Test
-	public void shouldPersonsPerStationAndAge() {
+	public void shouldPersonsPerStationAndAgeTest() {
 		FirestationDTO infoTest = fireStationService.personsPerStationAndAge("1");
 		
-		Assertions.assertEquals(2, infoTest.getNumberOfMajors());
-		Assertions.assertEquals(0, infoTest.getNumberOfMinors());
+		Assertions.assertEquals(1, infoTest.getNumberOfMajors());
+		Assertions.assertEquals(1, infoTest.getNumberOfMinors());
 		Assertions.assertEquals(2,  infoTest.getPersonPerStationDTO().size());
 	}
 	
@@ -76,7 +76,7 @@ public class FireStationServiceTest {
 	}
 	
 	@Test
-	public void shouldUpdateFireStation() {
+	public void shouldUpdateFireStationTest() {
 		fireStationService.updateFireStation(firestations.get(2).getAddress(), firestation);
 		
 		Assertions.assertEquals("146 Liberty St", firestations.get(2).getAddress());
