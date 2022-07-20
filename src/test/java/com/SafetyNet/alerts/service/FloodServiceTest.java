@@ -1,8 +1,9 @@
 package com.SafetyNet.alerts.service;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,50 +11,55 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.SafetyNet.alerts.StoreTest;
 import com.SafetyNet.alerts.dto.FamilyDTO;
-import com.SafetyNet.alerts.dto.PersonFloodDTO;
-import com.SafetyNet.alerts.model.MedicalRecord;
-import com.SafetyNet.alerts.model.Store;
+import com.SafetyNet.alerts.dto.MedicalRecordsInfoDTO;
+import com.SafetyNet.alerts.model.FireStation;
+import com.SafetyNet.alerts.model.Person;
 import com.SafetyNet.alerts.repository.FireStationRepository;
-import com.SafetyNet.alerts.repository.MedicalRecordRepository;
 import com.SafetyNet.alerts.repository.PersonRepository;
 
 public class FloodServiceTest {
 
 	FireStationRepository fireStationRepository;
 	PersonRepository personRepository;
-	MedicalRecordRepository medicalRecordRepository;
 	MedicalRecordService medicalRecordService;
 	FloodService floodService;
-	MedicalRecord medicalrecord = new MedicalRecord();
+	
+	Person person = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
+	List<Person> persons = Arrays.asList(person);
+	
+	FireStation firestation = new FireStation("1509 Culver St", "1");
+	List<FireStation> firestations = Arrays.asList(firestation);
+	
+	MedicalRecordsInfoDTO medicalRecordsInfo = new MedicalRecordsInfoDTO(Arrays.asList("aznol:350mg", "hydrapermazol:100mg"), 
+			Arrays.asList("nillacilan"));
 	
 	@BeforeEach
 	public void setUp() {
-		Store testStore = StoreTest.testStore();
-		fireStationRepository = new FireStationRepository(testStore);
-		personRepository = new PersonRepository(testStore);
-		medicalRecordRepository = new MedicalRecordRepository(testStore);
+		fireStationRepository = mock(FireStationRepository.class);
+		personRepository = mock(PersonRepository.class);
+		medicalRecordService = mock(MedicalRecordService.class);
 		floodService = new FloodService(fireStationRepository, 
-				personRepository, new MedicalRecordService(medicalRecordRepository));
+				personRepository, medicalRecordService);
 	}
 	
 	@Test
 	public void shouldListOfFamilyTest() {
-		List<String> stationNumbers = Arrays.asList("1", "2", "3");
-		List<FamilyDTO> listOfFamilies = floodService.listOfFamily(stationNumbers);
-		List<PersonFloodDTO> family = listOfFamilies.get(0).getFamily();
+		when(fireStationRepository.findByStation(any())).thenReturn(firestations);
+		when(medicalRecordService.getAgeOfPerson(any(), any())).thenReturn(38);
+		when(personRepository.findByAddress(any())).thenReturn(persons);
+		when(medicalRecordService.medicalrecordFindByFirstNameAndLastName(any(), any()))
+			.thenReturn(medicalRecordsInfo);
 
-		int ageTest = Period.between(LocalDate.parse("03/06/1984", 
-				DateTimeFormatter.ofPattern("MM/dd/yyyy")), LocalDate.now()).getYears();
+		List<FamilyDTO> listOfFamilies = floodService.listOfFamily(Arrays.asList("1"));
 		
-		Assertions.assertEquals(3, listOfFamilies.size());
-		Assertions.assertEquals(2,  family.size());
-		Assertions.assertEquals("John", family.get(0).getFirstName());
-		Assertions.assertEquals("Boyd", family.get(0).getLastName());
-		Assertions.assertEquals(ageTest, family.get(0).getAge());
-		Assertions.assertEquals(2, family.get(0).getMedicalRecords().getMedications().size());
-		Assertions.assertEquals(1, family.get(0).getMedicalRecords().getAllergies().size());
+		Assertions.assertEquals(1, listOfFamilies.size());
+		Assertions.assertEquals(1,  listOfFamilies.get(0).getFamily().size());
+		Assertions.assertEquals("John", listOfFamilies.get(0).getFamily().get(0).getFirstName());
+		Assertions.assertEquals("Boyd", listOfFamilies.get(0).getFamily().get(0).getLastName());
+		Assertions.assertEquals(38, listOfFamilies.get(0).getFamily().get(0).getAge());
+		Assertions.assertEquals(2, listOfFamilies.get(0).getFamily().get(0).getMedicalRecords().getMedications().size());
+		Assertions.assertEquals(1, listOfFamilies.get(0).getFamily().get(0).getMedicalRecords().getAllergies().size());
 	}
 
 }

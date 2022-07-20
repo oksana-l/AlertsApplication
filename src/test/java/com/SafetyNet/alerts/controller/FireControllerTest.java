@@ -34,12 +34,11 @@ public class FireControllerTest {
 	void setup() { 		
 		MockitoAnnotations.openMocks(this);  		
 		this.mockMvc = MockMvcBuilders.standaloneSetup(fireController)
-			//.setMessageConverters(new MappingJackson2HttpMessageConverter(new ObjectMapper()))
 			.build();
 	}
 
 	@Test
-	public void shouldLoadListOfDataFire() throws Exception {
+	public void shouldLoadListOfDataFireTest() throws Exception {
 
 		when(dataFireService.listOfDataFire("123"))
 			.thenReturn(

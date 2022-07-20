@@ -12,11 +12,6 @@ import com.SafetyNet.alerts.service.CommunityEmailService;
 @RestController
 public class CommunityEmailController {
 
-	public CommunityEmailController(CommunityEmailService communityEmailService) {
-		
-		this.communityEmailService = communityEmailService;
-	}
-
 	@Autowired
 	private CommunityEmailService communityEmailService;
 	

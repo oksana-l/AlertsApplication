@@ -53,7 +53,6 @@ public class FloodService {
 					return personFlood;
 			}) 
 				.collect(Collectors.toList()));
-		System.out.print(family.toString());
 		return family;
 	}
 }

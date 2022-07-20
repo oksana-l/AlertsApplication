@@ -14,12 +14,7 @@ import com.SafetyNet.alerts.service.ChildAlertService;
 public class ChildAlertController {
 
 	@Autowired
-	ChildAlertService childAlertService;
-	
-//	public ChildAlertController(ChildAlertService childAlertService) {
-//		
-//		this.childAlertService = childAlertService;
-//	}
+	private ChildAlertService childAlertService;
 
 	@GetMapping("/childAlert")
 	public List<ChildAlertDTO> listOfChildPerAddress(@RequestParam String address) {

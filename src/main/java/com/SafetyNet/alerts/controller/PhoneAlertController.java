@@ -21,7 +21,7 @@ public class PhoneAlertController {
 	private PhoneAlertService phoneAlertService;
 	
 	@GetMapping("/phoneAlert") 
-	public Set<String> listOfPhonePerFireStation(@RequestParam String firestation) {
+	public Set<String> phoneAlertController(@RequestParam String firestation) {
 		return phoneAlertService.listOfPhonePerNumFireStation(firestation);
 	}
 }

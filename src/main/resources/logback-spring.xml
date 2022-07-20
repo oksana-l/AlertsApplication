@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true">
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+    
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>target/request.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <root level="info">
+        <appender-ref ref="Console" />
+    </root>
+
+    <logger name="com.SafetyNet" level="debug" additivity="false">
+        <appender-ref ref="Console" />
+    </logger>
+    
+    <logger name="org.zalando.logbook" level="TRACE" additivity="false">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="Console" />
+    </logger>
+    
+
+</configuration>

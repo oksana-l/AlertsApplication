@@ -9,11 +9,10 @@ public class PersonInfoDTO {
 	private MedicalRecordsInfoDTO medicalRecords;
 	
 	public PersonInfoDTO() {
-		super();
 	}
 	
 	public PersonInfoDTO(String name, String address, int age, String email, MedicalRecordsInfoDTO medicalRecords) {
-		super();
+		
 		this.name = name;
 		this.address = address;
 		this.age = age;

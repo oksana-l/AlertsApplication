@@ -52,7 +52,7 @@ public class PersonController {
 	 * 
 	 */
 	@DeleteMapping("/person/{name}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.ACCEPTED)
 	public void deletePerson(@PathVariable("name") final String name) {
 		personService.deletePerson(name);
 	}
