@@ -1,93 +1,129 @@
 package com.SafetyNet.alerts.service;
 
-import java.util.List;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import org.assertj.core.util.Sets;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.AdditionalAnswers;
 
-import com.SafetyNet.alerts.StoreTest;
 import com.SafetyNet.alerts.dto.FirestationDTO;
 import com.SafetyNet.alerts.dto.PersonDTO;
 import com.SafetyNet.alerts.dto.PersonPerStationDTO;
 import com.SafetyNet.alerts.model.FireStation;
-import com.SafetyNet.alerts.model.Store;
+import com.SafetyNet.alerts.model.Person;
 import com.SafetyNet.alerts.repository.FireStationRepository;
-import com.SafetyNet.alerts.repository.MedicalRecordRepository;
 import com.SafetyNet.alerts.repository.PersonRepository;
 
 public class FireStationServiceTest {
 
 	FireStationRepository fireStationRepository;
 	PersonRepository personRepository;
-	MedicalRecordRepository medicalRecordRepository;
+	MedicalRecordService medicalRecordService;
 	FireStationService fireStationService;
 	FireStation firestation;
 	List<FireStation> firestations;
+	Set<String> addresses;
+	
+	Person person1 = new Person("John", "Boyd", "146 Liberty St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
+	Person person2 = new Person("Jacob", "Boyd", "146 Liberty St", "Culver", "97451", "841-874-6513","bstel@email.com");
+	Person person3 = new Person("Peter", "Duncan", "146 Liberty St", "Culver", "97451", "841-874-6512", "drk@email.com");
+	List<Person> persons = Arrays.asList(person1, person2, person3);
 	
 	@BeforeEach
 	public void setUp() {
-		Store testStore = StoreTest.testStore();
-		fireStationRepository = new FireStationRepository(testStore);
-		personRepository = new PersonRepository(testStore);
-		medicalRecordRepository = new MedicalRecordRepository(testStore);
+		fireStationRepository = mock(FireStationRepository.class);
+		personRepository = mock(PersonRepository.class);
+		medicalRecordService = mock(MedicalRecordService.class);
 		fireStationService = new FireStationService(fireStationRepository, 
-								personRepository, new MedicalRecordService(medicalRecordRepository));
-		firestations = testStore.getFirestations();
+								personRepository, medicalRecordService);
 		firestation = new FireStation("146 Liberty St","4");
+		firestations = Arrays.asList(firestation);
+		addresses = Sets.set("146 Liberty St");
 	}
 	
 	@Test
 	public void shouldInfoPersonsPerStationTest() {
-		List<PersonPerStationDTO> listOfPersons = fireStationService.infoPersonsPerStation("1");
-		Assertions.assertEquals(2, listOfPersons.size());
+		when(fireStationRepository.findByStation("4")).thenReturn(firestations);
+		when(personRepository.findByAddressIn(addresses)).thenReturn(persons);
+		
+		List<PersonPerStationDTO> listOfPersons = fireStationService.infoPersonsPerStation("4");
+		
+		Assertions.assertEquals(3, listOfPersons.size());
 	}
 	
 	@Test
 	public void shouldPersonPerStationTest() {
-
-		List<PersonDTO> listOfPersons = fireStationService.personPerStation("1");
-		Assertions.assertEquals(2, listOfPersons.size());
+		when(fireStationRepository.findByStation("4")).thenReturn(firestations);
+		when(personRepository.findByAddressIn(addresses)).thenReturn(persons);
+		List<PersonDTO> listOfPersons = fireStationService.personPerStation("4");
+		Assertions.assertEquals(3, listOfPersons.size());
 	}
 	
 	@Test
 	public void shouldPersonsPerStationAndAgeTest() {
-		FirestationDTO infoTest = fireStationService.personsPerStationAndAge("1");
+		when(fireStationRepository.findByStation("4")).thenReturn(firestations);
+		when(personRepository.findByAddressIn(addresses)).thenReturn(persons);
+		when(medicalRecordService.getAgeOfPerson("John", "Boyd")).thenReturn(38);
+		when(medicalRecordService.getAgeOfPerson("Jacob", "Boyd")).thenReturn(12);
+		when(medicalRecordService.getAgeOfPerson("Peter", "Duncan")).thenReturn(29);
 		
-		Assertions.assertEquals(1, infoTest.getNumberOfMajors());
+		
+		FirestationDTO infoTest = fireStationService.personsPerStationAndAge("4");
+		
+		Assertions.assertEquals(2, infoTest.getNumberOfMajors());
 		Assertions.assertEquals(1, infoTest.getNumberOfMinors());
-		Assertions.assertEquals(2,  infoTest.getPersonPerStationDTO().size());
+		Assertions.assertEquals(3,  infoTest.getPersonPerStationDTO().size());
 	}
 	
 	@Test
 	public void shouldExceptionCreateFireStationTest() throws Exception {
+		when(fireStationRepository.getFirestation("146 Liberty St"))
+			.thenReturn(Optional.of(firestation));
 		
 		Assertions.assertThrows(Exception.class, () -> fireStationService
-				.createFireStation(firestations.get(0)));
+				.createFireStation(firestation));
 	}
 		
 	@Test
 	public void shouldCreateFireStationTest() throws Exception {
-		fireStationService.createFireStation(firestation);
+		when(fireStationRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
 		
-		Assertions.assertEquals(4, firestations.size());
-		Assertions.assertEquals("4", firestations.get(3).getStation());
-		Assertions.assertEquals("146 Liberty St", firestations.get(3).getAddress());
+		FireStation firestationSave = fireStationService.createFireStation(firestation);
+
+		verify(fireStationRepository, times(1)).save(firestation);
+		Assertions.assertEquals("4", firestationSave.getStation());
+		Assertions.assertEquals("146 Liberty St", firestationSave.getAddress());
 	}
 	
 	@Test
 	public void shouldUpdateFireStationTest() {
-		fireStationService.updateFireStation(firestations.get(2).getAddress(), firestation);
+		when(fireStationRepository.getFirestation("146 Liberty St"))
+			.thenReturn(Optional.of(firestation));
+		when(fireStationRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
 		
-		Assertions.assertEquals("146 Liberty St", firestations.get(2).getAddress());
-		Assertions.assertEquals("4", firestations.get(2).getStation());
-		Assertions.assertEquals(3, firestations.size());	
+		FireStation firestationToUpdate = new FireStation("644 Gershwin Cir", "3");
+		Optional<FireStation> firestationUpdate = fireStationService
+				.updateFireStation("146 Liberty St", firestationToUpdate);
+
+		Assertions.assertEquals("644 Gershwin Cir", firestationUpdate.get().getAddress());
+		Assertions.assertEquals("3", firestationUpdate.get().getStation());	
 	}
 	
 	@Test
 	public void shouldDeleteFireStationTest() {
-		fireStationService.deleteFireStation(firestations.get(0).getAddress());
-		
-		Assertions.assertEquals(2, firestations.size());
+		fireStationService.deleteFireStation("146 Liberty St");
+
+		verify(fireStationRepository, times(1)).delete("146 Liberty St");
 	}
 }
