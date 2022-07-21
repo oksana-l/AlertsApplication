@@ -1,38 +1,33 @@
 package com.SafetyNet.alerts.service;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.AdditionalAnswers;
 
+import com.SafetyNet.alerts.dto.UpdateMedicalRecordRequest;
 import com.SafetyNet.alerts.model.MedicalRecord;
 import com.SafetyNet.alerts.repository.MedicalRecordRepository;
 
 public class MedicalRecordsServiceTest {
 	
-	@Mock
-	private MedicalRecordRepository medicalRecordsRepository;
-	
-	@InjectMocks
-	private MedicalRecordService medicalRecordsService;
-
+	MedicalRecordRepository medicalRecordsRepository;
+	MedicalRecordService medicalRecordsService;
 	Optional<MedicalRecord> medicalrecord;
 	
 	@BeforeEach
 	public void setUp() {
-		MockitoAnnotations.openMocks(this);
+		medicalRecordsRepository = mock(MedicalRecordRepository.class);
+		medicalRecordsService = new MedicalRecordService(medicalRecordsRepository);
 		medicalrecord = Optional.of(new MedicalRecord("John", "Boyd", "03/06/1984",
 					Arrays.asList("aznol:350mg", "hydrapermazol:100mg"), Arrays.asList("nillacilan")));
 		
@@ -41,10 +36,7 @@ public class MedicalRecordsServiceTest {
 	
 	@Test
 	public void shouldGetAgeOfPersonTest() {
-		int ageTest = Period.between(LocalDate.parse(medicalrecord.get().getbirthdate(), 
-				DateTimeFormatter.ofPattern("MM/dd/yyyy")), LocalDate.now()).getYears();
-		
-		Assertions.assertEquals(ageTest, medicalRecordsService.getAgeOfPerson("John", "Boyd"));
+		Assertions.assertEquals(38, medicalRecordsService.getAgeOfPerson("John", "Boyd"));
 	}
 	
 	@Test
@@ -71,22 +63,35 @@ public class MedicalRecordsServiceTest {
 	
 	@Test
 	public void shouldGetMedicalrecordTest() {
-		Assertions.assertEquals(medicalrecord, medicalRecordsService.getMedicalrecord("John Boyd"));
+		Optional<MedicalRecord> getMR = medicalRecordsService.getMedicalrecord("John Boyd");
+		Assertions.assertEquals(medicalrecord.get(), getMR.get());
 	}
 	
 	@Test
 	public void shouldCreateMedicalRecordTest() throws Exception {
-		MedicalRecord medicalrecordToCreate = new MedicalRecord();
+		when(medicalRecordsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
 		
-		medicalRecordsService.createMedicalRecord(medicalrecordToCreate);
+		MedicalRecord medicalrecordToSave = new MedicalRecord("Peter", "Duncan", "09/06/2000", 
+				Arrays.asList(), Arrays.asList("shellfish"));
+		MedicalRecord medicalrecordSave = medicalRecordsService.createMedicalRecord(medicalrecordToSave);
 		
-		verify(medicalRecordsRepository, times(1)).save(medicalrecordToCreate);
+		verify(medicalRecordsRepository, times(1)).save(medicalrecordToSave);
+		Assertions.assertEquals(0, medicalrecordSave.getMedications().size());
+		Assertions.assertEquals(1, medicalrecordSave.getAllergies().size());
 	}
 	
 	@Test
 	public void shouldUpdateMedicalRecordTest() {
+		when(medicalRecordsRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
 		
+		UpdateMedicalRecordRequest medicalrecordToUpdate = new UpdateMedicalRecordRequest("12/02/2010", 
+				Arrays.asList("pharmacol:5000mg", "terazine:10mg", "noznazol:250mg"), Arrays.asList());
+		Optional<MedicalRecord> medicalRecordUpdate = medicalRecordsService
+				.updateMedicalRecord("Johnb Boyd", medicalrecordToUpdate);
 		
+		//verify(medicalRecordsRepository.save(null), times(1)).save(medicalRecordUpdate.get());
+		Assertions.assertEquals(3, medicalRecordUpdate.get().getMedications().size());
+		Assertions.assertEquals(0, medicalRecordUpdate.get().getAllergies().size());
 	}
 	
 	@Test

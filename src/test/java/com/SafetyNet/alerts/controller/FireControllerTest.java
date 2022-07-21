@@ -21,6 +21,7 @@ import com.SafetyNet.alerts.dto.FireDTO;
 import com.SafetyNet.alerts.dto.FirePersonDTO;
 import com.SafetyNet.alerts.dto.MedicalRecordsInfoDTO;
 import com.SafetyNet.alerts.service.FireService;
+
 public class FireControllerTest {
 
 	@Mock
