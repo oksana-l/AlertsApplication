@@ -87,7 +87,7 @@ public class MedicalRecordsServiceTest {
 		UpdateMedicalRecordRequest medicalrecordToUpdate = new UpdateMedicalRecordRequest("12/02/2010", 
 				Arrays.asList("pharmacol:5000mg", "terazine:10mg", "noznazol:250mg"), Arrays.asList());
 		Optional<MedicalRecord> medicalRecordUpdate = medicalRecordsService
-				.updateMedicalRecord("Johnb Boyd", medicalrecordToUpdate);
+				.updateMedicalRecord("John Boyd", medicalrecordToUpdate);
 		
 		//verify(medicalRecordsRepository.save(null), times(1)).save(medicalRecordUpdate.get());
 		Assertions.assertEquals(3, medicalRecordUpdate.get().getMedications().size());

@@ -39,7 +39,7 @@ public class MedicalRecordController {
 		}
 	
 	@DeleteMapping("/medicalRecord/{name}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.ACCEPTED)
 	public void deleteMedicalRecord(@PathVariable("name") final String name) {
 		medicalRecordService.deleteMedicalRecord(name);
 	}

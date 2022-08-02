@@ -50,7 +50,7 @@ public class FireStationController {
 	}
 
 	@DeleteMapping("/firestation/{address}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ResponseStatus(HttpStatus.ACCEPTED)
 	public void deleteFireStation(@PathVariable("address") final String address) {
 		fireStationService.deleteFireStation(address);
 	}
