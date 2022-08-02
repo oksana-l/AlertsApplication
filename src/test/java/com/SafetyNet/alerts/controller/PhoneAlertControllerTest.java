@@ -28,10 +28,11 @@ public class PhoneAlertControllerTest {
 	private PhoneAlertController phoneAlertController;
 	private MockMvc mockMvc; 
 	
-	Set<String> phones = new HashSet<>();
+	Set<String> phones; 
 
 	@BeforeEach
 	void setup() {
+		phones = new HashSet<>();
 		phones.add("841-874-6512");
 		phones.add("849-374-7532");
 		MockitoAnnotations.openMocks(this);  		
