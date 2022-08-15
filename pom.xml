@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.6.6</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.SafetyNet</groupId>
 	<artifactId>alerts</artifactId>
@@ -14,7 +14,9 @@
 	<name>alerts</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 		
 	<dependencies>
@@ -63,10 +65,76 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-jar-plugin</artifactId>
+	            <configuration>
+	                <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Product-Name>****</Product-Name>
+                            <FinalName>${project.build.finalName}</FinalName>
+                            <Build-Time>${maven.build.timestamp}</Build-Time>
+                            <Build-Profile>prod</Build-Profile>
+                            <Build-Os>${os.name}</Build-Os>
+                        </manifestEntries>
+	                </archive>
+	            </configuration>
+	        </plugin>
+			<plugin>
          		<groupId>org.apache.maven.plugins</groupId>
           		<artifactId>maven-surefire-plugin</artifactId>
         	</plugin>
+        	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.7.1</version>
+			</plugin>
+			<plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.7</version>
+                <executions>
+                    <execution>
+                   		<id>default-instrument</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
+	
+	<reporting>
+	    <plugins>
+	      <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-surefire-report-plugin</artifactId>
+	        <version>3.0.0-M5</version>
+	      </plugin>
+	      <plugin>
+	        <groupId>org.jacoco</groupId>
+	        <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.7</version>
+	        <reportSets>
+	          <reportSet>
+	            <reports>
+	              <report>report</report>
+	            </reports>
+	          </reportSet>
+	        </reportSets>
+	      </plugin>
+	    </plugins>
+	  </reporting>
 
 </project>

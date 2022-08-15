@@ -12,7 +12,6 @@ public class PersonPerStationDTO {
 	}
 
 	public PersonPerStationDTO(String firstName, String lastName, String address, String phone) {
-		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;

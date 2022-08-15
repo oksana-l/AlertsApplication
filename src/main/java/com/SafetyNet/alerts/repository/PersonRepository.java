@@ -40,7 +40,7 @@ public class PersonRepository {
 				.findFirst();
 	}
 	
-	public List<Person> findByAddressIn(Set<String> addresses) {
+	public List<Person> findByAddressesIn(Set<String> addresses) {
 
 		return store.getPersons().stream()
 				.filter(a -> addresses.contains(a.getAddress()))

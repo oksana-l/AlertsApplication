@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.SafetyNet.alerts.dto.FamilyDTO;
-import com.SafetyNet.alerts.dto.PersonFloodDTO;
+import com.SafetyNet.alerts.dto.FloodDTO;
 import com.SafetyNet.alerts.repository.FireStationRepository;
 import com.SafetyNet.alerts.repository.PersonRepository;
 
@@ -43,9 +43,10 @@ public class FloodService {
 		family.setAddress(address);
 		family.setFamily(personRepository.findByAddress(address).stream()
 				.map(p -> {
-					PersonFloodDTO personFlood = new PersonFloodDTO();
+					FloodDTO personFlood = new FloodDTO();
 					personFlood.setFirstName(p.getFirstName());
 					personFlood.setLastName(p.getLastName());
+					personFlood.setPhone(p.getPhone());
 					personFlood.setAge(medicalRecordService
 							.getAgeOfPerson(p.getFirstName(), p.getLastName()));
 					personFlood.setMedicalRecords(medicalRecordService

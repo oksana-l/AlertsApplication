@@ -47,7 +47,7 @@ public class PhoneAlertControllerTest {
 			.thenReturn(phones);
 
 		mockMvc.perform( 							
-				MockMvcRequestBuilders.get("/phoneAlert?firestation=2")	
+			MockMvcRequestBuilders.get("/phoneAlert?firestation=2")	
 				.accept(MediaType.APPLICATION_JSON))
 			.andDo(print())
 			.andExpect(status().isOk());

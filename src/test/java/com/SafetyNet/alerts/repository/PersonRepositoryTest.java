@@ -52,7 +52,7 @@ public class PersonRepositoryTest {
 	public void shouldFindByAddressInTest() {
 		Set<String> addresses = new HashSet<String>();
 		addresses.add("1509 Culver St");
-		List<Person> findPersons = personRepository.findByAddressIn(addresses);
+		List<Person> findPersons = personRepository.findByAddressesIn(addresses);
 		
 		Assertions.assertEquals(2, findPersons.size());
 	}

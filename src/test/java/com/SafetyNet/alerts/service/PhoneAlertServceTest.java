@@ -43,7 +43,7 @@ public class PhoneAlertServceTest {
 	@Test
 	public void shouldListOfPhonePerNumFireStationTest() {
 		when(fireStationRepository.findByStation("1")).thenReturn(firestations);
-		when(personRepository.findByAddressIn(any())).thenReturn(persons);
+		when(personRepository.findByAddressesIn(any())).thenReturn(persons);
 		
 		Set<String> listOfPhone = phoneAlertService.listOfPhonePerNumFireStation("1");
 		

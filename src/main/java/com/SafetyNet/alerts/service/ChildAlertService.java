@@ -24,15 +24,18 @@ public class ChildAlertService {
 	}
 
 	public List<ChildAlertDTO> listOfChildPerAddress(String address) {
+
+		ChildAlertDTO childAlertDTO = new ChildAlertDTO();
+		List<PersonDTO> listOfAdult = listOfAdultPerAddress(address);
 		
 		return personRepository.findByAddress(address).stream()
 				.filter(p -> medicalRecordService.isMinor(p.getFirstName(), p.getLastName()))
 				.map(child -> {
-					ChildAlertDTO childAlertDTO = new ChildAlertDTO();
 					childAlertDTO.setFirstName(child.getFirstName());
 					childAlertDTO.setLastName(child.getLastName());
 					childAlertDTO.setAge(medicalRecordService
 							.getAgeOfPerson(child.getFirstName(), child.getLastName()));
+					childAlertDTO.setListOfAdult(listOfAdult);
 					return childAlertDTO;
 				})
 				.collect(Collectors.toList());

@@ -36,7 +36,7 @@ public class FireStationService {
 		Set<String> fireStationsAddress = fireStationRepository.findByStation(stationNumber)
 				.stream().map(fireStation -> fireStation.getAddress()).collect(Collectors.toSet());
 
-		return personRepository.findByAddressIn(fireStationsAddress).stream()
+		return personRepository.findByAddressesIn(fireStationsAddress).stream()
 				.map(p -> new PersonPerStationDTO(p.getFirstName(), p.getLastName(), p.getAddress(), p.getPhone()))
 				.collect(Collectors.toList());
 	}

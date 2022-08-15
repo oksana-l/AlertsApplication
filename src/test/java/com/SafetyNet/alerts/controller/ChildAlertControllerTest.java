@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.SafetyNet.alerts.dto.ChildAlertDTO;
+import com.SafetyNet.alerts.dto.PersonDTO;
 import com.SafetyNet.alerts.service.ChildAlertService;
 
 public class ChildAlertControllerTest {
@@ -38,7 +39,8 @@ public class ChildAlertControllerTest {
 	@Test
 	public void shouldListOfChildPerAddressTest() throws Exception {
 		when(dataChildAlertService.listOfChildPerAddress("1509 Culver St"))
-			.thenReturn(Arrays.asList(new ChildAlertDTO("Jacob", "Boyd", 12)));
+			.thenReturn(Arrays.asList(new ChildAlertDTO("Jacob", "Boyd", 12, 
+					Arrays.asList(new PersonDTO("", "")))));
 		
 		mockMvc.perform( 							
 				MockMvcRequestBuilders.get("/childAlert?address=1509 Culver St")
@@ -46,6 +48,8 @@ public class ChildAlertControllerTest {
 		.andExpect(status().isOk())
 		.andExpect(jsonPath("$[0].firstName").value("Jacob"))
 		.andExpect(jsonPath("$[0].lastName").value("Boyd"))
-		.andExpect(jsonPath("$[0].age").value(12));
+		.andExpect(jsonPath("$[0].age").value(12))
+		.andExpect(jsonPath("$[0].listOfAdult[0].firstName").value(""))
+		.andExpect(jsonPath("$[0].listOfAdult[0].lastName").value(""));
 	}
 }

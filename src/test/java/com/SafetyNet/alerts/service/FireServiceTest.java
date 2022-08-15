@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.SafetyNet.alerts.dto.FireDTO;
-import com.SafetyNet.alerts.dto.FirePersonDTO;
+import com.SafetyNet.alerts.dto.FloodDTO;
 import com.SafetyNet.alerts.dto.MedicalRecordsInfoDTO;
 import com.SafetyNet.alerts.model.FireStation;
 import com.SafetyNet.alerts.model.Person;
@@ -51,15 +51,15 @@ public class FireServiceTest {
 		when(medicalRecordService.medicalrecordFindByFirstNameAndLastName("John", "Boyd"))
 			.thenReturn(medicalRecordsInfo);
 		when(medicalRecordService.getAgeOfPerson("John", "Boyd")).thenReturn(38);
-		List<FirePersonDTO> listOfPerson = fireservice.listOfFirePersons("1509 Culver St");
+		List<FloodDTO> listOfPerson = fireservice.listOfFirePersons("1509 Culver St");
 		
 		Assertions.assertEquals(3, listOfPerson.size());
 		Assertions.assertEquals("John", listOfPerson.get(0).getFirstName());
 		Assertions.assertEquals("Boyd", listOfPerson.get(0).getLastName());
 		Assertions.assertEquals(38, listOfPerson.get(0).getAge());
 		Assertions.assertEquals("841-874-6512", listOfPerson.get(0).getPhone());
-		Assertions.assertEquals(2, listOfPerson.get(0).getMedical().getMedications().size());
-		Assertions.assertEquals(1, listOfPerson.get(0).getMedical().getAllergies().size());
+		Assertions.assertEquals(2, listOfPerson.get(0).getMedicalRecords().getMedications().size());
+		Assertions.assertEquals(1, listOfPerson.get(0).getMedicalRecords().getAllergies().size());
 		
 	}
 	

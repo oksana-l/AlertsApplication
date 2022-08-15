@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.SafetyNet.alerts.dto.FireDTO;
-import com.SafetyNet.alerts.dto.FirePersonDTO;
+import com.SafetyNet.alerts.dto.FloodDTO;
 import com.SafetyNet.alerts.repository.FireStationRepository;
 import com.SafetyNet.alerts.repository.PersonRepository;
 
@@ -27,16 +27,16 @@ public class FireService {
 		this.medicalRecordService = medicalRecordService;
 	}
 
-	public List<FirePersonDTO> listOfFirePersons(String address) {
+	public List<FloodDTO> listOfFirePersons(String address) {
 		
 		return personRepository.findByAddress(address).stream().map(person -> {
-			FirePersonDTO firePerson = new FirePersonDTO();
+			FloodDTO firePerson = new FloodDTO();
 			firePerson.setFirstName(person.getFirstName());
 			firePerson.setLastName(person.getLastName());
 			firePerson.setPhone(person.getPhone());
 			firePerson.setAge(medicalRecordService
 					.getAgeOfPerson(person.getFirstName(), person.getLastName()));
-			firePerson.setMedical(medicalRecordService
+			firePerson.setMedicalRecords(medicalRecordService
 					.medicalrecordFindByFirstNameAndLastName(person.getFirstName(), person.getLastName()));
 			return firePerson;
 		})
@@ -46,9 +46,9 @@ public class FireService {
 	public FireDTO listOfDataFire(String address) {
 
 		FireDTO listOfDataFire = new FireDTO();
-		listOfDataFire.setListOfFirePerson(listOfFirePersons(address));
+		listOfDataFire.setListOfPerson(listOfFirePersons(address));
 		listOfDataFire.setNumberFireStation(fireStationRepository.findByAddress(address)
-				.stream().map(fs -> fs.getStation()).collect(Collectors.toList()));
+				.stream().map(fs -> fs.getStation()).collect(Collectors.toSet()));
 		
 		return listOfDataFire;
 	}

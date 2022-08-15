@@ -5,11 +5,11 @@ public class FireStation {
 	private String station;
 	
 	public FireStation() {
-		super();
+		
 	}
 
 	public FireStation(String address, String station) {
-		super();
+		
 		this.address = address;
 		this.station = station;
 	}

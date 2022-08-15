@@ -1,6 +1,6 @@
 package com.SafetyNet.alerts.dto;
 
-public class PersonFloodDTO {
+public class FloodDTO {
 
 	private String firstName;
 	private String lastName;
@@ -8,11 +8,11 @@ public class PersonFloodDTO {
 	private int age;
 	private MedicalRecordsInfoDTO medicalRecords;
 	
-	public PersonFloodDTO() {
+	public FloodDTO() {
 		
 	}
 
-	public PersonFloodDTO(String firstName, String lastName, String phone, int age, MedicalRecordsInfoDTO medicalRecords) {
+	public FloodDTO(String firstName, String lastName, String phone, int age, MedicalRecordsInfoDTO medicalRecords) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phone = phone;

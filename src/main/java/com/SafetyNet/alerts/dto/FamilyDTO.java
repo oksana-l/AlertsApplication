@@ -4,24 +4,24 @@ import java.util.List;
 
 public class FamilyDTO {
 
-	List<PersonFloodDTO> family;
+	List<FloodDTO> family;
 	String address;
 
 	public FamilyDTO() {
 		
 	}
 
-	public FamilyDTO(List<PersonFloodDTO> family, String address) {
+	public FamilyDTO(List<FloodDTO> family, String address) {
 		
 		this.family = family;
 		this.address = address;
 	}
 
-	public List<PersonFloodDTO> getFamily() {
+	public List<FloodDTO> getFamily() {
 		return family;
 	}
 
-	public void setFamily(List<PersonFloodDTO> family) {
+	public void setFamily(List<FloodDTO> family) {
 		this.family = family;
 	}
 

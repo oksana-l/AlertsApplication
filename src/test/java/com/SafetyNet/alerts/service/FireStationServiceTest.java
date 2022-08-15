@@ -55,7 +55,7 @@ public class FireStationServiceTest {
 	@Test
 	public void shouldInfoPersonsPerStationTest() {
 		when(fireStationRepository.findByStation("4")).thenReturn(firestations);
-		when(personRepository.findByAddressIn(addresses)).thenReturn(persons);
+		when(personRepository.findByAddressesIn(addresses)).thenReturn(persons);
 		
 		List<PersonPerStationDTO> listOfPersons = fireStationService.infoPersonsPerStation("4");
 		
@@ -65,7 +65,7 @@ public class FireStationServiceTest {
 	@Test
 	public void shouldPersonPerStationTest() {
 		when(fireStationRepository.findByStation("4")).thenReturn(firestations);
-		when(personRepository.findByAddressIn(addresses)).thenReturn(persons);
+		when(personRepository.findByAddressesIn(addresses)).thenReturn(persons);
 		List<PersonDTO> listOfPersons = fireStationService.personPerStation("4");
 		Assertions.assertEquals(3, listOfPersons.size());
 	}
@@ -73,7 +73,7 @@ public class FireStationServiceTest {
 	@Test
 	public void shouldPersonsPerStationAndAgeTest() {
 		when(fireStationRepository.findByStation("4")).thenReturn(firestations);
-		when(personRepository.findByAddressIn(addresses)).thenReturn(persons);
+		when(personRepository.findByAddressesIn(addresses)).thenReturn(persons);
 		when(medicalRecordService.getAgeOfPerson("John", "Boyd")).thenReturn(38);
 		when(medicalRecordService.getAgeOfPerson("Jacob", "Boyd")).thenReturn(12);
 		when(medicalRecordService.getAgeOfPerson("Peter", "Duncan")).thenReturn(29);

@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.SafetyNet.alerts.dto.FamilyDTO;
 import com.SafetyNet.alerts.dto.MedicalRecordsInfoDTO;
-import com.SafetyNet.alerts.dto.PersonFloodDTO;
+import com.SafetyNet.alerts.dto.FloodDTO;
 import com.SafetyNet.alerts.service.FloodService;
 
 public class FloodControllerTest {
@@ -31,12 +31,12 @@ public class FloodControllerTest {
 	private FloodController floodController;
 	private MockMvc mockMvc; 
 	
-	List<PersonFloodDTO> familyList = Arrays.asList(
-			new PersonFloodDTO("John", "Boyd", "841-874-6512", 38, 
+	List<FloodDTO> familyList = Arrays.asList(
+			new FloodDTO("John", "Boyd", "841-874-6512", 38, 
 				new MedicalRecordsInfoDTO(
 					Arrays.asList("aznol:350mg", "hydrapermazol:100mg"), 
 					Arrays.asList("nillacilan"))),
-			new PersonFloodDTO("Jacob", "Boyd", "841-874-6513", 12,
+			new FloodDTO("Jacob", "Boyd", "841-874-6513", 12,
 				new MedicalRecordsInfoDTO(
 					Arrays.asList("pharmacol:5000mg", "terazine:10mg", "noznazol:250mg"), 
 					Arrays.asList())));

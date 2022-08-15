@@ -41,12 +41,12 @@ public class MedicalRecordsServiceTest {
 	
 	@Test
 	public void shouldIsMinorTest() {
-		Assertions.assertFalse(medicalRecordsService.getAgeOfPerson("John", "Boyd") < 19);
+		Assertions.assertFalse(medicalRecordsService.isMinor("John", "Boyd"));
 	}
 	
 	@Test
 	public void shouldIsMajorTest() {
-		Assertions.assertTrue(medicalRecordsService.getAgeOfPerson("John", "Boyd") >19);
+		Assertions.assertTrue(medicalRecordsService.isMajor("John", "Boyd"));
 	}
 	
 	@Test
@@ -65,6 +65,15 @@ public class MedicalRecordsServiceTest {
 	public void shouldGetMedicalrecordTest() {
 		Optional<MedicalRecord> getMR = medicalRecordsService.getMedicalrecord("John Boyd");
 		Assertions.assertEquals(medicalrecord.get(), getMR.get());
+	}
+	
+	@Test
+	public void shouldExceptionCreatePersonTest() {
+		when(medicalRecordsRepository.findByName("John", "Boyd"))
+			.thenReturn(medicalrecord);
+		
+		Assertions.assertThrows(Exception.class, () -> 
+			medicalRecordsService.createMedicalRecord(medicalrecord.get()));
 	}
 	
 	@Test

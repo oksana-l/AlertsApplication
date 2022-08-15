@@ -27,7 +27,7 @@ public class PhoneAlertService {
 		Set<String> fireStationAddresses = fireStationRepository.findByStation(stationNumber).stream()
 				.map(fs -> fs.getAddress()).collect(Collectors.toSet());
 
-		return personRepository.findByAddressIn(fireStationAddresses).stream()
+		return personRepository.findByAddressesIn(fireStationAddresses).stream()
 				.map(p -> p.getPhone()).collect(Collectors.toSet());
 	}
 }

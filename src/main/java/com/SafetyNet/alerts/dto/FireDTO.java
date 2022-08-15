@@ -1,35 +1,36 @@
 package com.SafetyNet.alerts.dto;
 
 import java.util.List;
+import java.util.Set;
 
 public class FireDTO {
 
-	List<FirePersonDTO> listOfFirePerson;
-	List<String> numberFireStation;
+	List<FloodDTO> listOfPerson;
+	Set<String> numberFireStation;
 	
 	public FireDTO() {
 		
 	}
 
-	public FireDTO(List<FirePersonDTO> listOfFirePerson, List<String> numberFireStation) {
+	public FireDTO(List<FloodDTO> listOfFirePerson, Set<String> numberFireStation) {
 		super();
-		this.listOfFirePerson = listOfFirePerson;
+		this.listOfPerson = listOfFirePerson;
 		this.numberFireStation = numberFireStation;
 	}
 
-	public List<FirePersonDTO> getListOfFirePerson() {
-		return listOfFirePerson;
+	public List<FloodDTO> getListOfPerson() {
+		return listOfPerson;
 	}
 
-	public void setListOfFirePerson(List<FirePersonDTO> listOfFirePerson) {
-		this.listOfFirePerson = listOfFirePerson;
+	public void setListOfPerson(List<FloodDTO> listOfFirePerson) {
+		this.listOfPerson = listOfFirePerson;
 	}
 
-	public List<String> getNumberFireStation() {
+	public Set<String> getNumberFireStation() {
 		return numberFireStation;
 	}
 
-	public void setNumberFireStation(List<String> numberFireStation) {
+	public void setNumberFireStation(Set<String> numberFireStation) {
 		this.numberFireStation = numberFireStation;
 	}
 }

@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.SafetyNet.alerts.dto.FireDTO;
-import com.SafetyNet.alerts.dto.FirePersonDTO;
+import com.SafetyNet.alerts.dto.FloodDTO;
 import com.SafetyNet.alerts.dto.MedicalRecordsInfoDTO;
 import com.SafetyNet.alerts.service.FireService;
 
@@ -45,19 +46,19 @@ public class FireControllerTest {
 			.thenReturn(
 				new FireDTO(
 					Arrays.asList(
-						new FirePersonDTO(), 
-						new FirePersonDTO(
+						new FloodDTO(), 
+						new FloodDTO(
 							"John", 
 							"Boyd", 
-							38, 
-							"841-874-6512",
+							"841-874-6512", 
+							38,
 							new MedicalRecordsInfoDTO(
 								Arrays.asList("aznol:350mg", "hydrapermazol:100mg"),
 								Arrays.asList("nillacilan")
 							)
 						)
 					), 
-					Arrays.asList("2", "3")
+					new HashSet<>(Arrays.asList("2", "3"))
 				)
 			);
 		
