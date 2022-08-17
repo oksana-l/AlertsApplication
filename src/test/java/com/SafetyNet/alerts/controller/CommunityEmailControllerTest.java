@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,8 +39,7 @@ public class CommunityEmailControllerTest {
 	@Test
 	public void shouldListOfMailsTest() throws Exception {
 		when(communityEmailService.listOfMails("Culver"))
-			.thenReturn(Arrays.asList("jaboyd@email.com", "bstel@email.com", "drk@email.com"));
-		
+			.thenReturn(new LinkedHashSet<>(Arrays.asList("jaboyd@email.com", "bstel@email.com", "drk@email.com")));
 		
 		mockMvc.perform( 							
 			MockMvcRequestBuilders.get("/communityEmail?city=Culver")	

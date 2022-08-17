@@ -1,6 +1,6 @@
 package com.SafetyNet.alerts.service;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +19,8 @@ public class CommunityEmailService {
 		this.personRepository = personRepository;
 	}
 
-	public List<String> listOfMails(String city) {
+	public Set<String> listOfMails(String city) {
 		return personRepository.findAllByCity(city).stream()
-				.map(p -> p.getEmail()).collect(Collectors.toList());
+				.map(p -> p.getEmail()).collect(Collectors.toSet());
 	}
 }

@@ -1,6 +1,6 @@
 package com.SafetyNet.alerts.controller;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class CommunityEmailController {
 	private CommunityEmailService communityEmailService;
 	
 	@GetMapping("/communityEmail")
-	public List<String> listOfMails(@RequestParam String city) {
+	public Set<String> listOfMails(@RequestParam String city) {
 		return communityEmailService.listOfMails(city);
 	}
 }

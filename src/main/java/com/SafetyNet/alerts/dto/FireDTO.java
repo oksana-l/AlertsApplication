@@ -12,9 +12,9 @@ public class FireDTO {
 		
 	}
 
-	public FireDTO(List<FloodDTO> listOfFirePerson, Set<String> numberFireStation) {
+	public FireDTO(List<FloodDTO> listOfPerson, Set<String> numberFireStation) {
 		super();
-		this.listOfPerson = listOfFirePerson;
+		this.listOfPerson = listOfPerson;
 		this.numberFireStation = numberFireStation;
 	}
 

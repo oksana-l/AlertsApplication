@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,10 +34,14 @@ public class CommunityEmailServiceTest {
 	@Test
 	public void shouldListOfMailsTest() {
 		when(personRepository.findAllByCity(any())).thenReturn(persons);
-		List<String> listOfMails = communityEmailService.listOfMails("Culver");
+		
+		Set<String> listOfMails = communityEmailService.listOfMails("Culver");
+		String[] array = new String[listOfMails.size()];
+		listOfMails.toArray(array);
+		
 		Assertions.assertEquals(3, listOfMails.size());
-		Assertions.assertEquals("jaboyd@email.com", listOfMails.get(0));
-		Assertions.assertEquals("bstel@email.com", listOfMails.get(1));
-		Assertions.assertEquals("drk@email.com", listOfMails.get(2));
+		Assertions.assertTrue(listOfMails.contains("jaboyd@email.com"));
+		Assertions.assertTrue(listOfMails.contains("bstel@email.com"));
+		Assertions.assertTrue(listOfMails.contains("drk@email.com"));
 	}
 }
